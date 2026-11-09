@@ -27,7 +27,7 @@ export default function Planos({ cartIds, onAdd }) {
     description: settings.comboDescription,
     price: settings.comboPrice,
     oldPrice: settings.comboOldPrice,
-    note: `em até ${settings.comboInstallments}x no cartão`,
+    note: 'Pagamento combinado pelo WhatsApp',
     features: settings.comboFeatures.map((f) => (/^todos os cursos$/i.test(f) ? `Todos os ${courses.length} cursos` : f)),
     cta: 'Quero o plano',
   }
@@ -45,7 +45,7 @@ export default function Planos({ cartIds, onAdd }) {
           <h2 className="section__title">
             Tudo o que você precisa em <span className="hl">um só plano</span>
           </h2>
-          <p className="section__lead">Pagamento único, sem mensalidade e sem taxas escondidas.</p>
+          <p className="section__lead">Fale com a academia pelo WhatsApp para combinar o pagamento.</p>
         </div>
 
         {/*
@@ -95,13 +95,13 @@ export default function Planos({ cartIds, onAdd }) {
 
             <ul className="offer__perks">
               <li>
-                <Icone name="zap" size={16} /> Acesso liberado assim que o pagamento é aprovado
+                <Icone name="zap" size={16} /> Acesso após confirmação do pagamento
               </li>
               <li>
                 <Icone name="infinity" size={16} /> Acesso vitalício, com as atualizações
               </li>
               <li>
-                <Icone name="creditCard" size={16} /> Pix ou cartão em até 12x
+                <Icone name="message" size={16} /> Pagamento combinado pelo WhatsApp
               </li>
             </ul>
 
@@ -123,7 +123,7 @@ export default function Planos({ cartIds, onAdd }) {
             </button>
 
             <p className="offer__secure">
-              <Icone name="lock" size={14} /> Pagamento seguro pelo Mercado Pago
+              <Icone name="message" size={14} /> Tire dúvidas e combine pelo WhatsApp
             </p>
 
             <div className="offer__guarantee">

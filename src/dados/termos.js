@@ -34,7 +34,7 @@ export const TERMOS = {
       blocos: [
         {
           lista: [
-            'Cada curso é formado por aulas em vídeo organizadas em módulos, disponíveis na área **Meus cursos** depois da confirmação do pagamento.',
+            'Cada curso é formado por aulas em vídeo organizadas em módulos, disponíveis na área **Meus cursos** depois que a academia confirmar o pagamento.',
             '**Liberação gradual:** nas compras pagas, o 1º módulo de cada curso é liberado assim que o pagamento é confirmado e os demais vão sendo liberados aos poucos nos primeiros dias, até o prazo informado na página do curso e na finalização da compra. Depois disso, o curso inteiro fica disponível. Em **Meus cursos** aparece a data em que cada módulo será liberado.',
             'O acesso aos cursos comprados é **vitalício**, ou seja, não expira, enquanto a plataforma estiver em funcionamento. Se a plataforma for encerrada, os alunos serão avisados com antecedência.',
             'O conteúdo pode ser atualizado, reorganizado ou ampliado para melhorar a qualidade do ensino, sem prejuízo do conteúdo essencial do curso adquirido.',
@@ -50,9 +50,8 @@ export const TERMOS = {
         {
           lista: [
             'Os preços são exibidos em reais (R$) e podem mudar a qualquer momento, sem afetar compras já confirmadas.',
-            'O valor final é calculado no momento da compra, já com os descontos e o cupom aplicados. É possível usar um cupom por pedido, respeitando a validade e o limite de usos de cada cupom.',
-            'Os pagamentos (Pix e cartão de crédito) são processados pelo **Mercado Pago**. O Studio HomeFit não recebe nem armazena os dados do seu cartão.',
-            'O acesso é liberado automaticamente quando o Mercado Pago confirma o pagamento.',
+            'Para comprar, entre em contato com a academia pelo WhatsApp. A equipe informará as opções de pagamento e confirmará o valor final.',
+            'O acesso ao curso é liberado pela equipe depois da confirmação do pagamento.',
           ],
         },
       ],
@@ -65,7 +64,7 @@ export const TERMOS = {
           lista: [
             'Você pode desistir da compra em até **7 (sete) dias corridos**, contados da data da compra, e receber o **reembolso integral** do valor pago, conforme o artigo 49 do Código de Defesa do Consumidor.',
             'Para pedir o reembolso, fale com a gente pelos canais da seção Contato, informando o e-mail da conta e o pedido.',
-            'O valor é devolvido pelo mesmo meio de pagamento, por meio do Mercado Pago. No cartão de crédito, o prazo para o estorno aparecer na fatura depende da operadora do cartão.',
+            'A equipe combinará com você a forma de devolução do valor pago.',
             'Com o reembolso, o acesso aos cursos daquele pedido é encerrado.',
             'O direito de desistência dentro do prazo vale independentemente de quantas aulas foram assistidas. As aulas abertas em cada pedido ficam registradas (veja a Política de Privacidade) e podem ser usadas como informação em contestações de pagamento e em casos de uso indevido do conteúdo, como cópia ou compartilhamento das aulas.',
           ],

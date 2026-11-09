@@ -16,7 +16,6 @@ import './estilos/site.css'
 
 // Partes que só aparecem depois de uma ação: carregam sob demanda e deixam a página inicial mais leve
 const PaginaDoCurso = lazy(() => import('./paginas/PaginaDoCurso'))
-const FinalizarCompra = lazy(() => import('./paginas/FinalizarCompra'))
 const AreaDoAluno = lazy(() => import('./paginas/AreaDoAluno'))
 const NaoEncontrada = lazy(() => import('./paginas/NaoEncontrada'))
 const Entrar = lazy(() => import('./paginas/Entrar'))
@@ -27,6 +26,15 @@ const Painel = lazy(() => import('./painel/Painel'))
 
 const BASE = import.meta.env.BASE_URL
 const CART_KEY = 'hf-carrinho'
+
+const linkCompraWhatsApp = (whatsapp, items) => {
+  if (!whatsapp || !items.length) return ''
+  const mensagem =
+    items.length === 1
+      ? `Olá, gostaria de comprar esse curso: ${items[0].title}`
+      : `Olá, gostaria de comprar estes cursos:\n${items.map((item) => `- ${item.title}`).join('\n')}`
+  return `https://wa.me/${whatsapp}?text=${encodeURIComponent(mensagem)}`
+}
 
 /*
   Rotas por hash (funcionam em qualquer hospedagem):
@@ -173,10 +181,10 @@ export default function Site() {
   const auth = useAuth()
   const library = useLibrary()
   const route = useRoute()
+  const whatsapp = store.settings?.whatsapp
 
   const [cart, setCart] = useState(loadCart)
   const [cartOpen, setCartOpen] = useState(false)
-  const [checkoutOpen, setCheckoutOpen] = useState(false)
   const [toast, setToast] = useState(null)
   const toastTimer = useRef(null)
 
@@ -236,21 +244,6 @@ export default function Site() {
     if (auth.recovery && route.page !== 'auth') window.location.hash = '#/nova-senha'
   }, [auth.recovery, route.page])
 
-  // Voltou do login para terminar a compra
-  useEffect(() => {
-    if (route.page !== 'home' || !auth.user) return
-    let resume
-    try {
-      resume = window.sessionStorage.getItem('hf-continuar-compra') === '1'
-      window.sessionStorage.removeItem('hf-continuar-compra')
-    } catch {
-      resume = false
-    }
-    if (!resume || !cart.length) return
-    const t = setTimeout(() => setCheckoutOpen(true), 0)
-    return () => clearTimeout(t)
-  }, [route.page, auth.user, cart.length])
-
   // Mantém o carrinho coerente com o catálogo (curso despublicado sai; preço atualizado)
   const catalogReady = store.status === 'ready'
   const cartView = catalogReady
@@ -289,31 +282,25 @@ export default function Site() {
 
   const buyNow = useCallback(
     (item) => {
-      putInCart(item)
-      setCartOpen(false)
-      setCheckoutOpen(true)
+      const url = linkCompraWhatsApp(whatsapp, [item])
+      if (!url) {
+        notify('O WhatsApp da academia ainda não foi configurado.')
+        return
+      }
+      window.open(url, '_blank', 'noopener,noreferrer')
     },
-    [putInCart],
+    [whatsapp, notify],
   )
 
   const removeFromCart = useCallback((id) => setCart((prev) => prev.filter((i) => i.id !== id)), [])
-  const clearCart = useCallback(() => setCart([]), [])
   const closeCart = useCallback(() => setCartOpen(false), [])
-  const closeCheckout = useCallback(() => setCheckoutOpen(false), [])
 
-  // Pedido pago: atualiza "Meus cursos" e esvazia o carrinho
   const completeOrder = useCallback(() => {
     library.refresh()
     setCart([])
   }, [library])
 
-  const openCheckout = () => {
-    setCartOpen(false)
-    setCheckoutOpen(true)
-  }
-
   const cartIds = cartView.map((i) => i.id)
-  const whatsapp = store.settings?.whatsapp
 
   // Telas cheias, sem o cabeçalho e o rodapé do site
   if (route.page === 'admin') {
@@ -375,19 +362,8 @@ export default function Site() {
         items={cartView}
         onClose={closeCart}
         onRemove={removeFromCart}
-        onCheckout={openCheckout}
+        whatsappUrl={linkCompraWhatsApp(whatsapp, cartView)}
       />
-
-      <Suspense fallback={null}>
-        {checkoutOpen && (
-          <FinalizarCompra
-            items={cartView}
-            onClose={closeCheckout}
-            onComplete={completeOrder}
-            onClearCart={clearCart}
-          />
-        )}
-      </Suspense>
 
       {whatsapp && (
         <a
@@ -423,4 +399,3 @@ export default function Site() {
     </>
   )
 }
-

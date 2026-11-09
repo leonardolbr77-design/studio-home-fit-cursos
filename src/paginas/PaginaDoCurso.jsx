@@ -3,7 +3,6 @@ import { useState } from 'react'
 import Icone from '../componentes/Icone'
 import Logo from '../componentes/Logo'
 import { EsqueletoCurso } from '../componentes/Esqueletos'
-import { FormasDePagamento } from '../componentes/Seguranca'
 import { COURSE_INCLUDES } from '../dados/conteudo'
 import { formatBRL, img } from '../dados/site'
 import { useLibrary, useStore } from '../estado/hooks'
@@ -146,7 +145,7 @@ export default function PaginaDoCurso({ slug, cartIds, onAdd, onBuyNow }) {
     </a>
   ) : (
     <button type="button" className="btn btn--primary btn--block btn--lg" onClick={() => onBuyNow(item)}>
-      <Icone name="lock" size={18} /> Comprar agora
+      <Icone name="message" size={18} /> Pagar pelo WhatsApp
     </button>
   )
 
@@ -275,13 +274,9 @@ export default function PaginaDoCurso({ slug, cartIds, onAdd, onBuyNow }) {
                 <Icone name="shield" size={16} /> Garantia incondicional de 7 dias
               </li>
               <li>
-                <Icone name="zap" size={16} /> Acesso imediato após o pagamento
-              </li>
-              <li>
-                <Icone name="lock" size={16} /> Pagamento criptografado
+                <Icone name="zap" size={16} /> Acesso após confirmação do pagamento
               </li>
             </ul>
-            <FormasDePagamento compact />
           </aside>
         </div>
       </section>
@@ -298,7 +293,7 @@ export default function PaginaDoCurso({ slug, cartIds, onAdd, onBuyNow }) {
           </a>
         ) : (
           <button type="button" className="btn btn--primary" onClick={() => onBuyNow(item)}>
-            <Icone name="lock" size={16} /> Comprar agora
+            <Icone name="message" size={16} /> Pagar pelo WhatsApp
           </button>
         )}
       </div>

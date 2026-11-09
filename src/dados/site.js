@@ -1,4 +1,4 @@
-// Configurações gerais da marca: edite aqui contatos, links e checkout.
+// Configurações gerais da marca: edite aqui contatos e links.
 export const SITE = {
   name: 'Studio HomeFit',
   whatsapp: '5564999258218', // DDI + DDD + número, só dígitos
@@ -6,8 +6,6 @@ export const SITE = {
   instagram: '',
   youtube: '',
   email: 'contato@studiohomefit.com.br',
-  // Link do checkout (Hotmart, Kiwify, Stripe...). Vazio = modo demonstração.
-  checkoutUrl: '',
 }
 
 // Imagens dos cursos: código do Unsplash ("photo-..."), link do Unsplash ou link qualquer (ex.: enviada no painel).

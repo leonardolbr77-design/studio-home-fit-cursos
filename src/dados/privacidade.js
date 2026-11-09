@@ -21,8 +21,8 @@ export const PRIVACIDADE = {
           lista: [
             '**Cadastro:** nome, e-mail e senha. A senha é guardada de forma criptografada pelo serviço de login: nem o Studio HomeFit tem acesso a ela.',
             '**Perfil (opcional):** número de WhatsApp, se você informar em Minha conta.',
-            '**Compras:** cursos comprados, valores, cupom usado, forma e situação do pagamento, nome e e-mail do comprador.',
-            '**Pagamento:** CPF e telefone, quando informados na finalização da compra, são enviados direto ao Mercado Pago para gerar a cobrança e **não ficam guardados** no nosso banco de dados. Os dados do cartão são digitados no ambiente do próprio Mercado Pago.',
+            '**Compras:** cursos comprados, valores e situação do pagamento, além dos dados necessários para confirmar a compra e liberar o acesso.',
+            '**Atendimento pelo WhatsApp:** as informações que você enviar à equipe para combinar e confirmar o pagamento, como nome e dados do pedido.',
             '**Uso da plataforma:** cursos liberados para você, aulas abertas (data e hora da primeira e da última vez, e quantas vezes) e aulas marcadas como concluídas.',
             '**Dados técnicos:** endereço IP, data e hora de acesso e informações do navegador, registrados pelos serviços de hospedagem e de login para segurança e prevenção a fraudes.',
           ],
@@ -36,7 +36,7 @@ export const PRIVACIDADE = {
         {
           lista: [
             '**Criar e manter sua conta e liberar os cursos comprados**: execução do contrato (art. 7º, V, da LGPD).',
-            '**Processar pagamentos e reembolsos**: execução do contrato e cumprimento de obrigação legal (art. 7º, II e V).',
+            '**Confirmar compras e reembolsos e liberar o acesso aos cursos**: execução do contrato e cumprimento de obrigação legal (art. 7º, II e V).',
             '**Enviar e-mails essenciais**, como confirmação de cadastro, recuperação de senha e situação do pedido: execução do contrato.',
             '**Atender você** pelo WhatsApp ou por e-mail: execução do contrato e legítimo interesse.',
             '**Segurança, prevenção a fraudes e cumprimento da lei**: legítimo interesse e obrigação legal (art. 7º, II e IX).',
@@ -54,7 +54,7 @@ export const PRIVACIDADE = {
         {
           lista: [
             '**Supabase:** banco de dados, sistema de login e armazenamento dos vídeos das aulas.',
-            '**Mercado Pago:** processamento dos pagamentos e reembolsos.',
+            '**WhatsApp/Meta:** comunicação com a equipe quando você escolhe falar com a academia por esse canal; o uso também está sujeito à política de privacidade do serviço.',
             '**Hospedagem do site e envio de e-mails:** empresas que mantêm o site no ar e enviam os e-mails da plataforma.',
             '**Google Fonts:** o site carrega as fontes do Google, que recebe o endereço IP de quem visita.',
             '**YouTube e Vimeo:** quando uma aula usa vídeo dessas plataformas, elas podem coletar dados de acordo com as próprias políticas de privacidade.',

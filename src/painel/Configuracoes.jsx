@@ -17,7 +17,6 @@ function validate(s) {
   const p = pricingErrors(s.comboPricing)
   if (p.base) e.comboPrice = p.base
   if (p.discount) e.comboDiscount = p.discount
-  if (!(Number(s.comboInstallments) >= 1 && Number(s.comboInstallments) <= 24)) e.comboInstallments = 'Entre 1 e 24.'
   if (!(Number.isInteger(Number(s.dripDays)) && Number(s.dripDays) >= 1 && Number(s.dripDays) <= 60)) e.dripDays = 'Entre 1 e 60 dias.'
   if (s.whatsapp && !/^\d{12,13}$/.test(s.whatsapp)) e.whatsapp = 'Só números, com 55 + DDD (ex.: 5564999258218).'
   for (const k of ['instagram', 'youtube']) if (s[k] && !/^https:\/\/\S+$/.test(s[k])) e[k] = 'Cole o link completo, começando com https://'
@@ -64,7 +63,6 @@ function SettingsForm({ initial }) {
         comboDescription: s.comboDescription.trim(),
         comboPrice: fromPricing(s.comboPricing).price,
         comboOldPrice: fromPricing(s.comboPricing).oldPrice,
-        comboInstallments: Number(s.comboInstallments),
         dripDays: Number(s.dripDays),
         comboFeatures: s.featuresText
           .split('\n')
@@ -93,46 +91,10 @@ function SettingsForm({ initial }) {
 
   return (
     <form onSubmit={save} className="settings">
-      <Card title="Pagamentos" subtitle="Como as compras são cobradas.">
-        <div className={`test-mode ${s.testMode ? 'is-on' : ''}`}>
-          <Toggle
-            checked={s.testMode}
-            onChange={(v) => setS((x) => ({ ...x, testMode: v }))}
-            label={s.testMode ? 'Modo de teste LIGADO' : 'Modo de teste desligado'}
-          />
-          <p>
-            {s.testMode ? (
-              <>
-                <Icone name="alert" size={16} /> <strong>Administradores "compram" sem pagar; alunos não conseguem finalizar compras.</strong>{' '}
-                Use só para testar o site e o painel. Desligue antes de divulgar.
-              </>
-            ) : (
-              <>As compras vão para o Mercado Pago (Pix e cartão). O acesso é liberado quando o pagamento é aprovado.</>
-            )}
-          </p>
-        </div>
-        <details className="howto">
-          <summary>
-            <Icone name="key" size={16} /> Como ligar o Mercado Pago (uma vez só)
-          </summary>
-          <ol>
-            <li>
-              No Mercado Pago: <strong>Seu negócio &gt; Configurações &gt; Credenciais</strong>. Copie o <em>Access Token</em> de produção.
-            </li>
-            <li>
-              No Supabase: <strong>Edge Functions &gt; Secrets</strong>. Crie <code>MP_ACCESS_TOKEN</code> com o token e{' '}
-              <code>SITE_URL</code> com o endereço do site (ex.: https://studiohomefit.com.br).
-            </li>
-            <li>
-              Publique as funções <code>criar-pagamento</code>, <code>webhook-mercadopago</code> e <code>conferir-pagamento</code>{' '}
-              (passo a passo no arquivo <code>SUPABASE.md</code> do projeto).
-            </li>
-            <li>
-              No Mercado Pago, em <strong>Webhooks</strong>, cadastre a URL da função <code>webhook-mercadopago</code> e copie a{' '}
-              <em>assinatura secreta</em> para o secret <code>MP_WEBHOOK_SECRET</code>.
-            </li>
-          </ol>
-        </details>
+      <Card title="Pagamentos" subtitle="Atendimento e confirmação manual das compras.">
+        <p>
+          Combine o pagamento com o aluno pelo WhatsApp. Depois de confirmar, libere o curso pela seção <strong>Alunos</strong>.
+        </p>
       </Card>
 
       <Card
@@ -176,9 +138,9 @@ function SettingsForm({ initial }) {
             )}
           </Field>
           <p className="xfield__hint">
-            Vale para compras pagas pelo Mercado Pago. Cursos liberados por você em <strong>Alunos</strong>, compras de teste e
-            cupons de 100% ficam liberados por completo. O aluno vê na tela quando cada módulo libera, e isso também aparece
-            na página do curso, na finalização da compra e nos Termos de Uso. Cada aula aberta fica registrada: em{' '}
+            Vale para pedidos com pagamento confirmado. Cursos liberados por você em <strong>Alunos</strong> ficam liberados
+            por completo. O aluno vê na tela quando cada módulo libera, e isso também aparece na página do curso e nos Termos
+            de Uso. Cada aula aberta fica registrada: em{' '}
             <strong>Vendas</strong>, o pedido mostra quantas aulas o aluno abriu e se ele já pediu reembolso antes.
           </p>
           <p className="xwarn">
@@ -211,21 +173,7 @@ function SettingsForm({ initial }) {
             value={s.comboPricing}
             onChange={(comboPricing) => setS((x) => ({ ...x, comboPricing }))}
             errors={{ base: show('comboPrice'), discount: show('comboDiscount') }}
-            installments={Number(s.comboInstallments)}
           />
-          <Field label="Parcelas no cartão" hint="Em até quantas vezes dá para pagar no cartão." error={show('comboInstallments')}>
-            {(p) => (
-              <input
-                {...p}
-                type="number"
-                min="1"
-                max="24"
-                value={s.comboInstallments}
-                onChange={set('comboInstallments')}
-                className="xinput--short"
-              />
-            )}
-          </Field>
           <Field label="O que está incluso" hint='Um item por linha. "Todos os cursos" vira "Todos os N cursos" automaticamente.'>
             {(p) => <textarea {...p} rows={6} value={s.featuresText} onChange={set('featuresText')} />}
           </Field>

@@ -240,11 +240,11 @@ export const PLANS = [
 export const FAQ = [
   {
     q: 'Como recebo acesso aos cursos?',
-    a: 'Logo após a confirmação do pagamento você recebe por e-mail o login da nossa área de membros. No Pix e no cartão a liberação é imediata.',
+    a: 'Fale com a equipe pelo WhatsApp para combinar o pagamento. O acesso é liberado depois que a academia confirmar o pagamento.',
   },
   {
     q: 'A compra é segura? Meus dados ficam protegidos?',
-    a: 'Sim. O pagamento é processado em ambiente criptografado (SSL) por uma plataforma certificada. Os dados do seu cartão nunca passam pelo nosso site e tratamos suas informações conforme a LGPD.',
+    a: 'O pagamento é combinado diretamente com a equipe pelo WhatsApp. Seus dados pessoais são tratados conforme a nossa Política de Privacidade.',
   },
   {
     q: 'Sou iniciante. Os cursos servem para mim?',
@@ -263,7 +263,7 @@ export const FAQ = [
     a: 'Você tem 7 dias de garantia incondicional. Se não ficar satisfeito, devolvemos 100% do valor, sem perguntas.',
   },
   {
-    q: 'Quais as formas de pagamento?',
-    a: 'Pix e cartão de crédito em até 12x. O ambiente de pagamento é 100% seguro e criptografado.',
+    q: 'Como faço o pagamento?',
+    a: 'Clique em “Pagar pelo WhatsApp” para falar com a equipe da academia e combinar o pagamento do curso.',
   },
 ]

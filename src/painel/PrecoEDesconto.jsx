@@ -15,7 +15,6 @@ export default function PrecoEDesconto({
   errors = {},
   label = 'Preço original do curso',
   hint = 'Valor sem desconto.',
-  installments,
 }) {
   const { base, discount, final } = value
   const pctId = useId()
@@ -109,11 +108,6 @@ export default function PrecoEDesconto({
           </span>
           <strong>{brl(final)}</strong>
         </div>
-        {installments > 1 && Number(final) > 0 && (
-          <p className="pdisc__note">
-            ou até {installments}x de {brl(Number(final) / installments)} no cartão
-          </p>
-        )}
       </div>
     </div>
   )

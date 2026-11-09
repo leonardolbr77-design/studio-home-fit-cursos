@@ -1,7 +1,6 @@
 // Carrinho lateral: lista os cursos escolhidos, o total e o botão de finalizar a compra.
 import { useEffect } from 'react'
 import Icone from './Icone'
-import { FormasDePagamento } from './Seguranca'
 import { formatBRL, img } from '../dados/site'
 import { useStore } from '../estado/hooks'
 import logoBranca from '../imagens/logo-homefit-branca.svg'
@@ -31,7 +30,7 @@ function details(item, store) {
   }
 }
 
-export default function Carrinho({ open, items, onClose, onRemove, onCheckout }) {
+export default function Carrinho({ open, items, onClose, onRemove, whatsappUrl }) {
   const store = useStore()
   const rows = items.map((item) => ({ item, ...details(item, store) }))
   const total = items.reduce((sum, i) => sum + i.price, 0)
@@ -135,10 +134,22 @@ export default function Carrinho({ open, items, onClose, onRemove, onCheckout })
                 <span>Total</span>
                 <strong>{formatBRL(total)}</strong>
               </div>
-              <p className="drawer__installments">Pix ou cartão em até 12x</p>
-              <button type="button" className="btn btn--primary btn--block btn--lg" onClick={onCheckout}>
-                <Icone name="lock" size={18} /> Finalizar compra segura
-              </button>
+              <p className="drawer__installments">Combine o pagamento diretamente com a academia pelo WhatsApp.</p>
+              {whatsappUrl ? (
+                <a
+                  className="btn btn--primary btn--block btn--lg"
+                  href={whatsappUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  onClick={onClose}
+                >
+                  <Icone name="message" size={18} /> Pagar pelo WhatsApp
+                </a>
+              ) : (
+                <button type="button" className="btn btn--primary btn--block btn--lg" disabled>
+                  WhatsApp indisponível
+                </button>
+              )}
               <button type="button" className="drawer__continue" onClick={onClose}>
                 Continuar comprando
               </button>
@@ -147,10 +158,9 @@ export default function Carrinho({ open, items, onClose, onRemove, onCheckout })
                   <Icone name="shield" size={15} /> Garantia de 7 dias
                 </span>
                 <span>
-                  <Icone name="lock" size={15} /> Pagamento seguro
+                  <Icone name="message" size={15} /> Atendimento direto
                 </span>
               </div>
-              <FormasDePagamento compact />
             </div>
           </>
         )}

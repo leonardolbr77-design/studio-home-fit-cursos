@@ -7,52 +7,65 @@ import { formatDate, shortId } from '../servicos/pedidos'
 import { useAuth } from '../estado/hooks'
 import { brl, downloadCsv, int } from './formatos'
 import { useAdmin, useAsync } from './hooks'
-import { Confirm, Drawer, Empty, ErrorBox, PageHead, SearchInput } from './interface'
+import { Confirm, Drawer, Empty, ErrorBox, Field, PageHead, SearchInput } from './interface'
 
 function StudentDetail({ student, onChanged }) {
-  const { notify, refreshSite } = useAdmin()
+  const { notify, refreshSite, settings } = useAdmin()
   const auth = useAuth()
   const detail = useAsync(() => backend.admin.getStudent(student.id), [student.id])
   const courses = useAsync(() => backend.admin.listCourses(), [])
   const [grantId, setGrantId] = useState('')
   const [confirm, setConfirm] = useState(null)
   const [busy, setBusy] = useState(false)
+  const [sale, setSale] = useState(null)
 
   const owned = new Set((detail.data?.enrollments ?? []).map((e) => e.course_id))
   const courseById = Object.fromEntries((courses.data ?? []).map((c) => [c.id, c]))
   const available = (courses.data ?? []).filter((c) => !owned.has(c.id))
-  // "liberar todos" vale para os cursos publicados (rascunhos ficam escondidos até de quem tem acesso)
   const missing = available.filter((c) => c.published)
   const draftsLeft = available.length - missing.length
   const name = student.full_name || student.email
   const isMe = student.id === auth.user?.id
+  const hasCombo = (detail.data?.orders ?? []).some((o) => o.status === 'paid' && o.order_items.some((i) => i.kind === 'combo'))
+  const saleItems = (sale?.items ?? []).map((item) => ({
+    courseId: item.courseId,
+    amount: Number(item.amount.replace(',', '.')),
+  }))
+  const saleValid = !!sale && sale.items.every((item) => /^\d+(?:[.,]\d{1,2})?$/.test(item.amount))
+    && saleItems.every((item) => Number.isFinite(item.amount) && item.amount >= 0 && item.amount <= 100000)
+  const saleTotal = saleValid ? saleItems.reduce((sum, item) => sum + Math.round(item.amount * 100), 0) / 100 : null
 
-  const grantAll = async () => {
-    setBusy(true)
-    try {
-      await backend.admin.grantCourses(
-        student.id,
-        missing.map((c) => c.id),
-      )
-      notify(`${missing.length === 1 ? 'Curso liberado' : `${missing.length} cursos liberados`} para ${name}.`)
-      setConfirm(null)
-      setGrantId('')
-      detail.reload()
-      onChanged()
-      refreshSite()
-    } catch (e) {
-      notify(e.message, 'error')
-    } finally {
-      setBusy(false)
-    }
+  const prepareSale = (selected) => {
+    setSale({
+      requestId: crypto.randomUUID(),
+      method: 'pix',
+      items: selected.map((c) => ({ courseId: c.id, title: c.title, amount: Number(c.price).toFixed(2) })),
+    })
+  }
+
+  const prepareCombo = () => {
+    setSale({
+      requestId: crypto.randomUUID(),
+      method: 'pix',
+      combo: true,
+      items: [{ courseId: 'combo', title: settings.comboTitle, amount: Number(settings.comboPrice).toFixed(2) }],
+    })
   }
 
   const grant = async () => {
-    if (!grantId) return
+    if (!saleValid) {
+      notify('Informe o valor recebido de cada curso, entre R$ 0,00 e R$ 100.000,00, com até duas casas decimais.', 'error')
+      return
+    }
     setBusy(true)
     try {
-      await backend.admin.grantCourse(student.id, grantId)
-      notify(`Curso liberado para ${name}.`)
+      if (sale.combo) {
+        await backend.admin.grantCombo(student.id, saleItems[0].amount, sale.method, sale.requestId)
+      } else {
+        await backend.admin.grantCourses(student.id, saleItems, sale.method, sale.requestId)
+      }
+      notify(`Venda manual registrada e ${sale.combo ? 'plano completo liberado' : saleItems.length === 1 ? 'curso liberado' : 'cursos liberados'} para ${name}.`)
+      setSale(null)
       setGrantId('')
       detail.reload()
       onChanged()
@@ -116,6 +129,7 @@ function StudentDetail({ student, onChanged }) {
 
       <h3 className="detail__title">Cursos ({owned.size})</h3>
       <ErrorBox error={detail.error} onRetry={detail.reload} />
+      <ErrorBox error={courses.error} onRetry={courses.reload} />
       {detail.data?.enrollments?.length === 0 && <p className="detail__muted">Nenhum curso liberado.</p>}
       <ul className="detail__items">
         {(detail.data?.enrollments ?? []).map((e) => (
@@ -151,18 +165,19 @@ function StudentDetail({ student, onChanged }) {
                     </option>
                   ))}
                 </select>
-                <button type="button" className="btn btn--outline btn--sm" onClick={grant} disabled={!grantId || busy}>
+                <button type="button" className="btn btn--outline btn--sm" onClick={() => prepareSale([courseById[grantId]])} disabled={!grantId || busy || detail.loading || !!detail.error}>
                   <Icone name="plus" size={15} /> Liberar
                 </button>
               </div>
-              {missing.length > 1 && (
-                <button type="button" className="btn btn--primary btn--sm grant-all" onClick={() => setConfirm({ kind: 'all' })} disabled={busy}>
-                  <Icone name="checkCircle" size={15} /> Liberar todos os cursos ({missing.length})
+              {settings?.comboActive && missing.length > 0 && !hasCombo && (
+                <button type="button" className="btn btn--primary btn--sm grant-all" onClick={prepareCombo} disabled={busy || detail.loading || !!detail.error}>
+                  <Icone name="star" size={15} /> Liberar plano completo · {brl(settings.comboPrice)}
                 </button>
               )}
+              <p className="detail__muted">Ao liberar, confirme o valor recebido para registrar a venda e atualizar o faturamento. Use R$ 0,00 para cortesia.</p>
               {draftsLeft > 0 && (
                 <p className="detail__muted">
-                  {draftsLeft === 1 ? '1 curso em rascunho fica' : `${draftsLeft} cursos em rascunho ficam`} de fora do "liberar todos".
+                  {draftsLeft === 1 ? '1 curso em rascunho fica' : `${draftsLeft} cursos em rascunho ficam`} de fora do plano completo.
                   Libere {draftsLeft === 1 ? 'ele' : 'eles'} pela lista acima se quiser.
                 </p>
               )}
@@ -219,9 +234,7 @@ function StudentDetail({ student, onChanged }) {
       <Confirm
         open={!!confirm}
         title={
-          confirm?.kind === 'all'
-            ? `Liberar todos os cursos para ${name}?`
-            : confirm?.kind === 'revoke'
+          confirm?.kind === 'revoke'
             ? `Remover o acesso a "${confirm.course.title}"?`
             : confirm?.role === 'admin'
               ? 'Tornar esta pessoa administradora?'
@@ -230,21 +243,66 @@ function StudentDetail({ student, onChanged }) {
                 : 'Remover a permissão de administrador?'
         }
         text={
-          confirm?.kind === 'all'
-            ? `${missing.length} cursos serão liberados sem cobrança: ${missing.map((c) => c.title).join(', ')}. Cursos criados depois não entram automaticamente.`
-            : confirm?.kind === 'revoke'
-            ? 'O aluno deixa de ver as aulas deste curso. O pedido continua registrado.'
+          confirm?.kind === 'revoke'
+            ? 'O aluno deixa de ver as aulas deste curso. A venda e o faturamento são mantidos. Para descontar o valor, registre um estorno em Vendas.'
             : confirm?.role === 'admin'
               ? 'Ela vai poder ver vendas, alunos e editar cursos, preços e configurações. Só faça isso com pessoas de confiança.'
               : isMe
                 ? 'Você sai do painel na hora. Outro administrador precisa existir para isso funcionar.'
                 : 'A pessoa volta a ser aluna e perde o acesso ao painel.'
         }
-        confirmLabel={confirm?.kind === 'all' ? 'Liberar todos' : confirm?.kind === 'revoke' ? 'Remover acesso' : 'Confirmar'}
-        tone={confirm?.role === 'admin' || confirm?.kind === 'all' ? 'primary' : 'danger'}
+        confirmLabel={confirm?.kind === 'revoke' ? 'Remover acesso' : 'Confirmar'}
+        tone={confirm?.role === 'admin' ? 'primary' : 'danger'}
         busy={busy}
-        onConfirm={confirm?.kind === 'all' ? grantAll : run}
+        onConfirm={run}
         onCancel={() => setConfirm(null)}
+      />
+      <Confirm
+        open={!!sale}
+        title={`Registrar venda e liberar para ${name}?`}
+        text={
+          sale && (
+            <div className="detail">
+              <p>Confira os dados da compra e informe o valor do pagamento confirmado para concluir a liberação do acesso. Esta confirmação não gera uma nova cobrança.</p>
+              {sale.combo && <p>Com o plano completo, o aluno terá acesso a todos os cursos disponíveis, mantendo os acessos que já possui. O valor informado corresponde ao plano completo.</p>}
+              {sale.items.map((item, index) => (
+                <Field key={item.courseId} label={item.title} hint="Valor recebido em reais. Para cortesia, informe 0.">
+                  {(props) => (
+                    <input
+                      {...props}
+                      type="text"
+                      inputMode="decimal"
+                      value={item.amount}
+                      disabled={busy}
+                      onChange={(e) => setSale((s) => ({
+                        ...s,
+                        items: s.items.map((it, i) => i === index ? { ...it, amount: e.target.value } : it),
+                      }))}
+                    />
+                  )}
+                </Field>
+              ))}
+              <Field label="Forma de pagamento recebido">
+                {(props) => (
+                  <select {...props} className="xselect" value={sale.method} disabled={busy} onChange={(e) => setSale((s) => ({ ...s, method: e.target.value }))}>
+                    <option value="pix">Pix</option>
+                    <option value="credit_card">Cartão de crédito</option>
+                    <option value="debit_card">Cartão de débito</option>
+                    <option value="cash">Dinheiro</option>
+                    <option value="other">Outro pagamento externo</option>
+                  </select>
+                )}
+              </Field>
+              <strong>Total recebido: {saleValid ? brl(saleTotal) : 'Confira os valores informados'}</strong>
+              <p>As liberações anteriores não serão alteradas. Cursos criados depois não entram automaticamente.</p>
+            </div>
+          )
+        }
+        confirmLabel="Registrar e liberar"
+        tone="primary"
+        busy={busy}
+        onConfirm={grant}
+        onCancel={() => setSale(null)}
       />
     </div>
   )

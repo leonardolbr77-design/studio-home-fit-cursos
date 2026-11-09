@@ -17,6 +17,9 @@ export const PAYMENT_METHOD = {
   ticket: 'Boleto',
   account_money: 'Saldo Mercado Pago',
   teste: 'Teste',
+  cash: 'Dinheiro',
+  other: 'Outro pagamento externo',
+  courtesy: 'Cortesia',
 }
 
 export const shortId = (id) => String(id ?? '').slice(0, 8).toUpperCase()

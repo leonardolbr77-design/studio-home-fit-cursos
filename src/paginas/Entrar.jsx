@@ -156,7 +156,7 @@ function LoginForm({ next, notice }) {
     setError('')
     if (locked) return
     if (!EMAIL_RE.test(email.trim()) || !password) {
-      setError('Preencha e-mail e senha.')
+      setError('E-mail ou senha incorretos.')
       return
     }
     setBusy(true)

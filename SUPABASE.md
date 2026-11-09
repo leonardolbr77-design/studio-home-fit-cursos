@@ -30,6 +30,8 @@ No Supabase: **SQL Editor > New query**.
    abertas) e **Run**.
 6. Nova query: cole `supabase/migrations/0006_apresentacao_do_curso.sql` (vídeo de apresentação de cada curso) e **Run**.
 7. Nova query: cole `supabase/migrations/0007_professores.sql` (cards dos professores editáveis em **Painel > Configurações**) e **Run**.
+8. Nova query: cole `supabase/migrations/0008_vendas_manuais.sql` (vendas registradas ao liberar cursos) e **Run**.
+9. Nova query: cole `supabase/migrations/0009_plano_completo_manual.sql` (venda manual do plano completo pelo valor do plano) e **Run**.
 
 Os arquivos podem ser rodados de novo sem duplicar nada. **Sempre na ordem**: se rodar um arquivo de novo, rode também
 todos os que vêm depois dele (cada um substitui algumas regras dos anteriores).
@@ -127,6 +129,33 @@ Faça isso **o quanto antes**: enquanto a conta do dono não existe, outra pesso
 Se o login com a sua senha não funcionar depois de confirmar, use **Esqueci minha senha**: o link do e-mail também cria uma senha nova e derruba os outros acessos.
 
 Para ter mais administradores: **Painel > Alunos > (pessoa) > Tornar administrador**.
+
+## Vendas por fora do site
+
+Depois de aplicar a migração `0008_vendas_manuais.sql`, em **Painel > Alunos > (aluno)**,
+selecione um curso e clique em **Liberar**. Confira o valor já recebido pelo curso
+(o preço atual é sugerido) e a forma de pagamento. Informe **0** para cortesia.
+**Registrar e liberar** cria uma venda manual paga e libera os cursos na mesma transação,
+sem cobrar o aluno. O faturamento, o ranking de cursos, as vendas e o total gasto do aluno
+passam a incluir esses valores. Descontos são informados diretamente no valor recebido de cada curso.
+
+Liberações anteriores não são convertidas em vendas. Repetir a mesma solicitação não duplica o registro.
+**Remover acesso** mantém a venda e o faturamento; a conciliação não restaura acessos de vendas manuais.
+Para descontar o faturamento e remover os acessos do pedido, registre **Estornar e remover acesso**
+em **Vendas**. A devolução do dinheiro é feita por fora do site. Em uma venda com vários cursos,
+o estorno é do pedido inteiro.
+
+### Plano completo
+
+Com a migração `0009_plano_completo_manual.sql`, use **Liberar plano completo** no aluno.
+O valor sugerido é o mesmo do plano no site, configurado em **Configurações**; confirme o
+valor efetivamente recebido (0 para cortesia). O plano vira **um único item Combo**, e o
+faturamento conta esse valor apenas uma vez, sem somar os preços dos cursos.
+São liberados os cursos publicados atuais ainda pendentes; acessos anteriores são preservados.
+O botão só aparece com o plano ativo, cursos pendentes e sem outra compra paga do plano.
+Para vender um curso avulso, selecione-o na lista e use **Liberar**.
+O estorno do plano desconta seu valor e remove os acessos vinculados ao pedido, sem remover
+acessos anteriores independentes. Cursos futuros não são liberados automaticamente.
 
 ## 5. Testar tudo antes do Mercado Pago (opcional)
 
@@ -256,6 +285,8 @@ Arquivos do servidor:
 - `supabase/migrations/0005_protecao_reembolso.sql`: liberação gradual das aulas e registro das aulas abertas.
 - `supabase/migrations/0006_apresentacao_do_curso.sql`: vídeo de apresentação de cada curso, aberto para todos.
 - `supabase/migrations/0007_professores.sql`: cards dos professores editáveis no painel.
+- `supabase/migrations/0008_vendas_manuais.sql`: registro atômico de venda manual ao liberar cursos, sem alterar liberações antigas.
+- `supabase/migrations/0009_plano_completo_manual.sql`: venda manual do plano completo como um único item Combo.
 - `supabase/functions/criar-pagamento`: cria o pedido e o pagamento.
 - `supabase/functions/webhook-mercadopago`: confirma pagamentos, estornos e chargebacks.
 - `supabase/functions/conferir-pagamento`: confere pedidos direto no Mercado Pago (volta do aluno, painel e rotina).

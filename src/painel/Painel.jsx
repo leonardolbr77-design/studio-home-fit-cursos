@@ -147,11 +147,6 @@ function Shell({ section, id }) {
               <Icone name="menu" size={22} />
             </button>
             <span className="adm__crumb">{current?.label ?? 'Painel'}</span>
-            {currentSettings?.testMode && (
-              <a href="#/admin/configuracoes" className="adm__test">
-                <Icone name="alert" size={15} /> Modo de teste
-              </a>
-            )}
             {backend.isMock && <span className="adm__test">Banco simulado (testes)</span>}
           </header>
           <main className="adm__content" id="conteudo">

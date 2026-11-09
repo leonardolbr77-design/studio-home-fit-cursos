@@ -451,14 +451,15 @@ const supabaseBackend = {
       ])
       return { enrollments, orders }
     },
-    async grantCourse(userId, courseId) {
-      await must((await client()).from('enrollments').insert({ user_id: userId, course_id: courseId }))
+    async grantCourses(userId, items, method, requestId) {
+      return must((await client()).rpc('admin_grant_courses', {
+        p_user_id: userId, p_items: items, p_method: method, p_request_id: requestId,
+      }))
     },
-    // vários de uma vez (ex.: "liberar todos"); os que o aluno já tem são ignorados
-    async grantCourses(userId, courseIds) {
-      if (!courseIds.length) return
-      const rows = courseIds.map((courseId) => ({ user_id: userId, course_id: courseId }))
-      await must((await client()).from('enrollments').upsert(rows, { onConflict: 'user_id,course_id', ignoreDuplicates: true }))
+    async grantCombo(userId, amount, method, requestId) {
+      return must((await client()).rpc('admin_grant_combo', {
+        p_user_id: userId, p_amount: amount, p_method: method, p_request_id: requestId,
+      }))
     },
     async revokeCourse(userId, courseId) {
       await must((await client()).from('enrollments').delete().eq('user_id', userId).eq('course_id', courseId))

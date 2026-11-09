@@ -505,17 +505,76 @@ export const backend = {
         orders: db.orders.filter((o) => o.user_id === userId).map((o) => ({ ...o, order_items: db.items.filter((i) => i.order_id === o.id) })),
       }
     },
-    async grantCourse(userId, courseId) {
-      requireAdmin()
-      if (db.enrollments.some((e) => e.user_id === userId && e.course_id === courseId)) err('Já existe um registro com esse valor (ex.: link do curso ou código do cupom).')
-      db.enrollments.push({ user_id: userId, course_id: courseId, order_id: null, created_at: now() })
-    },
-    async grantCourses(userId, courseIds) {
+    async grantCourses(userId, items, method, requestId) {
       requireAdmin()
       await wait()
-      for (const courseId of courseIds)
-        if (!db.enrollments.some((e) => e.user_id === userId && e.course_id === courseId))
-          db.enrollments.push({ user_id: userId, course_id: courseId, order_id: null, created_at: now() })
+      const student = profileOf(userId)
+      if (!student) err('Aluno não encontrado')
+      if (!requestId || !Array.isArray(items) || items.length < 1 || items.length > 100) err('Selecione entre 1 e 100 cursos')
+      if (!['pix', 'credit_card', 'debit_card', 'cash', 'other'].includes(method)) err('Forma de pagamento inválida')
+      if (new Set(items.map((i) => i.courseId)).size !== items.length) err('Um curso não pode aparecer duas vezes na venda')
+      if (items.some((i) => !Number.isFinite(i.amount) || i.amount < 0 || i.amount > 100000 || Math.abs(i.amount * 100 - Math.round(i.amount * 100)) > 1e-7))
+        err('Informe valores entre R$ 0,00 e R$ 100.000,00 com até duas casas decimais')
+      const total = Math.round(sum(items.map((i) => i.amount)) * 100) / 100
+      const paymentMethod = total === 0 ? 'courtesy' : method
+      const existing = db.orders.find((o) => o.id === requestId)
+      if (existing) {
+        const saved = db.items.filter((i) => i.order_id === requestId)
+        if (existing.user_id === userId && existing.payment_provider === 'manual' && existing.status === 'paid'
+          && existing.total === total && existing.payment_method === paymentMethod && saved.length === items.length
+          && items.every((i) => saved.some((s) => s.course_id === i.courseId && s.price === i.amount))) return requestId
+        err('Esta solicitação já foi utilizada. Reabra a liberação e confira os pedidos do aluno')
+      }
+      const selected = items.map((i) => {
+        const course = db.courses.find((c) => c.id === i.courseId)
+        if (!course) err('Curso não encontrado')
+        if (db.enrollments.some((e) => e.user_id === userId && e.course_id === i.courseId)) err(`O aluno já tem acesso a "${course.title}". Atualize a lista antes de liberar`)
+        return { ...i, title: course.title }
+      })
+      const at = now()
+      db.orders.push({
+        id: requestId, user_id: userId, status: 'paid', subtotal: total, discount: 0, total, coupon_code: null,
+        payment_provider: 'manual', payment_method: paymentMethod, payment_id: null,
+        payer_name: student.full_name, payer_email: student.email, created_at: at, paid_at: at,
+      })
+      for (const item of selected) {
+        db.items.push({ id: uid(), order_id: requestId, kind: 'course', course_id: item.courseId, title: item.title, price: item.amount })
+        db.enrollments.push({ user_id: userId, course_id: item.courseId, order_id: requestId, created_at: at })
+      }
+      return requestId
+    },
+    async grantCombo(userId, amount, method, requestId) {
+      requireAdmin()
+      await wait()
+      const student = profileOf(userId)
+      if (!student) err('Aluno não encontrado')
+      if (!requestId) err('Informe a solicitação da venda')
+      if (!Number.isFinite(amount) || amount < 0 || amount > 100000 || Math.abs(amount * 100 - Math.round(amount * 100)) > 1e-7)
+        err('Informe o valor recebido pelo plano, entre R$ 0,00 e R$ 100.000,00 com até duas casas decimais')
+      if (!['pix', 'credit_card', 'debit_card', 'cash', 'other'].includes(method)) err('Forma de pagamento inválida')
+      const paymentMethod = amount === 0 ? 'courtesy' : method
+      const existing = db.orders.find((o) => o.id === requestId)
+      if (existing) {
+        const saved = db.items.filter((i) => i.order_id === requestId)
+        if (existing.user_id === userId && existing.payment_provider === 'manual' && existing.status === 'paid'
+          && existing.total === amount && existing.payment_method === paymentMethod && saved.length === 1
+          && saved[0].kind === 'combo' && saved[0].price === amount) return requestId
+        err('Esta solicitação já foi utilizada. Reabra a liberação e confira os pedidos do aluno')
+      }
+      if (!settings.combo_active) err('O plano completo está desativado nas configurações')
+      if (db.orders.some((o) => o.user_id === userId && o.status === 'paid' && db.items.some((i) => i.order_id === o.id && i.kind === 'combo')))
+        err('O aluno já tem uma compra paga do plano completo. Confira os pedidos antes de registrar outra venda')
+      const selected = db.courses.filter((c) => c.published && !db.enrollments.some((e) => e.user_id === userId && e.course_id === c.id))
+      if (!selected.length) err('Não há cursos publicados pendentes de liberação para este aluno')
+      const at = now()
+      db.orders.push({
+        id: requestId, user_id: userId, status: 'paid', subtotal: amount, discount: 0, total: amount, coupon_code: null,
+        payment_provider: 'manual', payment_method: paymentMethod, payment_id: null,
+        payer_name: student.full_name, payer_email: student.email, created_at: at, paid_at: at,
+      })
+      db.items.push({ id: uid(), order_id: requestId, kind: 'combo', course_id: null, title: settings.combo_title, price: amount })
+      for (const course of selected) db.enrollments.push({ user_id: userId, course_id: course.id, order_id: requestId, created_at: at })
+      return requestId
     },
     async revokeCourse(userId, courseId) {
       db.enrollments = db.enrollments.filter((e) => !(e.user_id === userId && e.course_id === courseId))

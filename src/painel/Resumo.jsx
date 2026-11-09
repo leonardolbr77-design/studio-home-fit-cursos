@@ -6,7 +6,7 @@ import { backend } from '../servicos/banco'
 import { ORDER_STATUS, formatDate, shortId } from '../servicos/pedidos'
 import { GraficoDeArea, ListaDeBarras } from './graficos'
 import { PERIODS, brl, brlCompact, daysAgo, delta, endOfToday, int, pct } from './formatos'
-import { useAdmin, useAsync } from './hooks'
+import { useAsync } from './hooks'
 import { Card, Empty, ErrorBox, PageHead, Segmented } from './interface'
 
 const MONTHS = ['jan', 'fev', 'mar', 'abr', 'mai', 'jun', 'jul', 'ago', 'set', 'out', 'nov', 'dez']
@@ -45,7 +45,6 @@ function Kpi({ label, value, current, previous, hero, hint }) {
 }
 
 export default function Resumo() {
-  const { settings } = useAdmin()
   const [period, setPeriod] = useState('30')
   const [showTable, setShowTable] = useState(false)
   const days = PERIODS.find((p) => p.id === period).days
@@ -67,17 +66,6 @@ export default function Resumo() {
           <Segmented label="Período" options={PERIODS} value={period} onChange={setPeriod} />
         }
       />
-
-      {settings?.testMode && (
-        <div className="xbanner xbanner--warn">
-          <Icone name="alert" size={18} />
-          <span>
-            <strong>Modo de teste ligado:</strong> administradores compram sem cobrança e alunos não conseguem finalizar
-            compras. Desligue em Configurações antes de vender de verdade.
-          </span>
-          <a href="#/admin/configuracoes">Configurações</a>
-        </div>
-      )}
 
       <ErrorBox error={stats.error} onRetry={stats.reload} />
 

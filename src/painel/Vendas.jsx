@@ -37,54 +37,8 @@ const ACTIONS = {
   },
 }
 
-// O que o registro de pagamentos (payment_events) aponta, em palavras
-const ALERTS = {
-  'alerta:pagamento_em_dobro': 'Pago duas vezes: devolva um dos pagamentos no Mercado Pago',
-  'alerta:estorno_de_outro_pagamento': 'Estorno de um pagamento extra (o acesso continua)',
-  'alerta:estorno_com_outro_pagamento_valido': 'Um pagamento foi estornado, mas outro do mesmo pedido continua valendo',
-  'recusado:valor': 'Valor pago diferente do total do pedido (nada foi liberado)',
-  'recusado:moeda': 'Pagamento em outra moeda (nada foi liberado)',
-  'recusado:pedido_inexistente': 'Pagamento de um pedido que não existe',
-  'recusado:pagamento_de_outro_pedido': 'Pagamento que já tinha liberado outro pedido',
-}
-
 // Resultados da conferência que mudaram algo no pedido
 const CHANGED = ['liberado', 'acesso_removido', 'failed', 'cancelled']
-
-function PaymentIssues({ issues }) {
-  if (!issues) return null
-  const parts = [
-    issues.paid_without_access.length > 0 && `${int(issues.paid_without_access.length)} pedido(s) pago(s) sem o acesso liberado`,
-    issues.access_without_payment.length > 0 && `${int(issues.access_without_payment.length)} acesso(s) de pedido que não está pago`,
-    Number(issues.old_pending) > 0 && `${int(issues.old_pending)} pedido(s) pendente(s) há mais de 3 dias`,
-    issues.alerts.length > 0 && `${int(issues.alerts.length)} alerta(s) do Mercado Pago nos últimos 30 dias`,
-  ].filter(Boolean)
-  if (!parts.length) return null
-
-  return (
-    <div className="xbanner xbanner--warn">
-      <Icone name="alert" size={18} />
-      <span>
-        <strong>Pagamentos para conferir:</strong> {parts.join('; ')}. Clique em <em>Conferir pagamentos</em> para consultar
-        o Mercado Pago e corrigir acessos.
-        {issues.alerts.length > 0 && (
-          <details>
-            <summary>Ver alertas</summary>
-            <ul>
-              {issues.alerts.map((a, i) => (
-                <li key={i}>
-                  {formatDate(a.created_at)}: {a.order_id ? `pedido #${shortId(a.order_id)}, ` : ''}
-                  {ALERTS[a.result] ?? a.result}
-                  {a.payment_id ? ` (pagamento ${a.payment_id})` : ''}
-                </li>
-              ))}
-            </ul>
-          </details>
-        )}
-      </span>
-    </div>
-  )
-}
 
 // Quanto o aluno usou dos cursos deste pedido: ajuda a decidir um pedido de reembolso
 // e serve de prova numa contestação no Mercado Pago
@@ -157,6 +111,11 @@ export default function Vendas() {
   const paid = orders.filter((o) => o.status === 'paid')
   const revenue = paid.reduce((s, o) => s + Number(o.total), 0)
   const issues = useAsync(() => backend.admin.paymentIssues(), [])
+  const hasOnlinePayments = orders.some((o) => o.payment_provider === 'mercadopago')
+    || issues.data?.alerts?.length > 0
+    || issues.data?.paid_without_access?.length > 0
+    || issues.data?.access_without_payment?.length > 0
+    || Number(issues.data?.old_pending) > 0
   const [checking, setChecking] = useState(false)
 
   const reconcile = async () => {
@@ -221,20 +180,23 @@ export default function Vendas() {
     <>
       <PageHead
         title="Vendas"
-        subtitle="Todos os pedidos, com filtro, detalhes e ações."
+        subtitle="Vendas manuais registradas ao liberar cursos em Alunos, além do histórico de pedidos."
         actions={
           <>
-            <button type="button" className="btn btn--outline" onClick={reconcile} disabled={checking}>
-              {checking ? <span className="spinner" aria-hidden="true" /> : <Icone name="refresh" size={17} />} Conferir pagamentos
-            </button>
+            <a href="#/admin/alunos" className="btn btn--primary">
+              <Icone name="plus" size={17} /> Registrar venda em Alunos
+            </a>
+            {hasOnlinePayments && (
+              <button type="button" className="btn btn--outline" onClick={reconcile} disabled={checking}>
+                {checking ? <span className="spinner" aria-hidden="true" /> : <Icone name="refresh" size={17} />} Conferir pagamentos
+              </button>
+            )}
             <button type="button" className="btn btn--outline" onClick={exportCsv} disabled={!orders.length}>
               <Icone name="download" size={17} /> Exportar planilha
             </button>
           </>
         }
       />
-
-      <PaymentIssues issues={issues.data} />
 
       <div className="xfilters">
         <Segmented label="Período" options={RANGES} value={range} onChange={setRange} />
@@ -317,6 +279,7 @@ export default function Vendas() {
                     <td className="num">
                       {brl(o.total)}
                       {Number(o.discount) > 0 && <span className="cell-sub">cupom {o.coupon_code}</span>}
+                      {o.payment_method === 'courtesy' && <span className="cell-sub">Cortesia</span>}
                     </td>
                     <td>
                       <span className="cell-main">{PROVIDER[o.payment_provider] ?? o.payment_provider}</span>
@@ -433,7 +396,9 @@ export default function Vendas() {
       <Confirm
         open={!!action}
         title={ACTIONS[action]?.title}
-        text={ACTIONS[action]?.text}
+        text={action === 'refunded' && open?.payment_provider === 'manual'
+          ? 'O faturamento será descontado e o acesso aos cursos deste pedido será removido. A devolução do dinheiro deve ser feita por fora do site, pela mesma forma em que você recebeu. Esta ação apenas registra o estorno.'
+          : ACTIONS[action]?.text}
         confirmLabel={ACTIONS[action]?.label}
         tone={ACTIONS[action]?.tone}
         busy={busy}

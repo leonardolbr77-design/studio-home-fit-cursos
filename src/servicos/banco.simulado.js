@@ -273,9 +273,9 @@ export const backend = {
     async stats(from, to) {
       requireAdmin()
       await wait(120)
-      const paid = db.orders.filter((o) => o.status === 'paid' && new Date(o.paid_at) >= from && new Date(o.paid_at) < to)
+      const paid = db.orders.filter((o) => o.payment_provider !== 'test' && o.status === 'paid' && new Date(o.paid_at) >= from && new Date(o.paid_at) < to)
       const len = to - from
-      const prevPaid = db.orders.filter((o) => o.status === 'paid' && new Date(o.paid_at) >= new Date(from - len) && new Date(o.paid_at) < from)
+      const prevPaid = db.orders.filter((o) => o.payment_provider !== 'test' && o.status === 'paid' && new Date(o.paid_at) >= new Date(from - len) && new Date(o.paid_at) < from)
       const unit = len > 120 * 864e5 ? 'month' : 'day'
       const key = (d) => (unit === 'month' ? d.toISOString().slice(0, 7) + '-01' : d.toISOString().slice(0, 10))
       const series = []
@@ -296,7 +296,7 @@ export const backend = {
         acc[k].revenue += Number(i.price)
         return acc
       }, {})).sort((a, b) => b.revenue - a.revenue)
-      const statusCounts = db.orders.filter((o) => new Date(o.created_at) >= from && new Date(o.created_at) < to).reduce((acc, o) => ({ ...acc, [o.status]: (acc[o.status] ?? 0) + 1 }), {})
+      const statusCounts = db.orders.filter((o) => o.payment_provider !== 'test' && new Date(o.created_at) >= from && new Date(o.created_at) < to).reduce((acc, o) => ({ ...acc, [o.status]: (acc[o.status] ?? 0) + 1 }), {})
       const revenue = sum(paid.map((o) => o.total))
       const prevRevenue = sum(prevPaid.map((o) => o.total))
       return {
@@ -316,7 +316,7 @@ export const backend = {
     async recentOrders(limit = 8) {
       requireAdmin()
       if (!Number.isInteger(limit) || limit < 1 || limit > 8) err('O limite de pedidos recentes deve estar entre 1 e 8')
-      return db.orders.filter((o) => !settings.recent_orders_cleared_at || o.created_at > settings.recent_orders_cleared_at)
+      return db.orders.filter((o) => o.payment_provider !== 'test' && (!settings.recent_orders_cleared_at || o.created_at > settings.recent_orders_cleared_at))
         .sort((a, b) => b.created_at.localeCompare(a.created_at) || b.id.localeCompare(a.id))
         .slice(0, limit).map((o) => ({ ...o, order_items: db.items.filter((i) => i.order_id === o.id) }))
     },
@@ -447,6 +447,7 @@ export const backend = {
       await wait()
       const s = (search ?? '').toLowerCase()
       return db.orders
+        .filter((o) => o.payment_provider !== 'test')
         .filter((o) => (!from || new Date(o.created_at) >= from) && (!to || new Date(o.created_at) < to))
         .filter((o) => !status || status === 'all' || o.status === status)
         .filter((o) => !s || o.payer_email.includes(s) || o.payer_name.toLowerCase().includes(s))
@@ -479,14 +480,14 @@ export const backend = {
         lessons_done: db.progress.filter((p) => p.user_id === o.user_id && courses.includes(db.lessons.find((l) => l.id === p.lesson_id)?.course_id)).length,
         first_view: views.map((v) => v.first_viewed_at).sort()[0] ?? null,
         last_view: views.map((v) => v.last_viewed_at).sort().pop() ?? null,
-        refunds: db.orders.filter((x) => x.user_id === o.user_id && x.status === 'refunded').length,
+        refunds: db.orders.filter((x) => x.payment_provider !== 'test' && x.user_id === o.user_id && x.status === 'refunded').length,
         refunds_with_access: 0,
       }
     },
     async refundCounts() {
       requireAdmin()
       const counts = {}
-      for (const o of db.orders) if (o.status === 'refunded' && o.user_id) counts[o.user_id] = (counts[o.user_id] ?? 0) + 1
+      for (const o of db.orders) if (o.payment_provider !== 'test' && o.status === 'refunded' && o.user_id) counts[o.user_id] = (counts[o.user_id] ?? 0) + 1
       return counts
     },
     async paymentIssues() {
@@ -504,14 +505,14 @@ export const backend = {
           ...p,
           confirmed: db.users.find((u) => u.id === p.id)?.confirmed ?? false,
           courses: db.enrollments.filter((e) => e.user_id === p.id).length,
-          spent: sum(db.orders.filter((o) => o.user_id === p.id && o.status === 'paid').map((o) => o.total)),
-          last_order: db.orders.filter((o) => o.user_id === p.id).map((o) => o.created_at).sort().pop() ?? null,
+          spent: sum(db.orders.filter((o) => o.payment_provider !== 'test' && o.user_id === p.id && o.status === 'paid').map((o) => o.total)),
+          last_order: db.orders.filter((o) => o.payment_provider !== 'test' && o.user_id === p.id).map((o) => o.created_at).sort().pop() ?? null,
         }))
     },
     async getStudent(userId) {
       return {
         enrollments: db.enrollments.filter((e) => e.user_id === userId),
-        orders: db.orders.filter((o) => o.user_id === userId).map((o) => ({ ...o, order_items: db.items.filter((i) => i.order_id === o.id) })),
+        orders: db.orders.filter((o) => o.payment_provider !== 'test' && o.user_id === userId).map((o) => ({ ...o, order_items: db.items.filter((i) => i.order_id === o.id) })),
       }
     },
     async grantCourses(userId, items, method, requestId) {

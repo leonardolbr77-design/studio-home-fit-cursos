@@ -4,7 +4,7 @@ Site de venda de cursos online de execução correta dos exercícios, com área 
 
 - **Tecnologias:** React 19 e Vite.
 - **Banco, login e arquivos:** Supabase.
-- **Pagamentos:** Mercado Pago.
+- **Pagamentos:** Pix combinado pelo WhatsApp e confirmado manualmente no painel.
 
 ## Como rodar no computador
 
@@ -20,9 +20,9 @@ Outros comandos:
 | `npm run build` | Gera o site pronto para publicar, na pasta `dist/` |
 | `npm run preview` | Abre o site gerado pelo build, para conferir antes de publicar |
 | `npm run lint` | Procura erros comuns no código |
-| `npm test` | Testes de segurança do pagamento e do banco (banco PostgreSQL de teste + Mercado Pago simulado) |
+| `npm test` | Testes do banco, das vendas manuais e de integrações legadas simuladas, sem cobranças reais |
 
-As chaves do Supabase ficam no arquivo `.env` (modelo em `.env.example`). Sem elas, o site abre em **modo demonstração**: sem login nem painel, com as compras salvas só no navegador. O passo a passo do banco, do login e dos pagamentos está no [SUPABASE.md](SUPABASE.md).
+As chaves do Supabase ficam no arquivo `.env` (modelo em `.env.example`). Sem elas, o site abre em **modo demonstração**: sem login nem painel, com as compras salvas só no navegador. O passo a passo do banco, do login e do pagamento manual por Pix está no [SUPABASE.md](SUPABASE.md).
 
 ## Organização das pastas
 
@@ -35,7 +35,7 @@ home-fit-cursos/
 ├── publico/              arquivos copiados como estão: ícones, manifest, página 404
 ├── originais/            arquivos de imagem originais (não entram no site)
 ├── supabase/             tudo o que roda no servidor (ver abaixo)
-├── testes/               testes automáticos (npm test); apoio/ tem o banco de teste e o Mercado Pago simulado
+├── testes/               testes automáticos (npm test); apoio/ tem o banco e integrações de pagamento simuladas
 └── src/                  código do site
     ├── main.jsx          ponto de entrada (liga o React na página)
     ├── Site.jsx          o site inteiro: páginas pelo endereço (#/...), carrinho e página inicial
@@ -106,10 +106,9 @@ home-fit-cursos/
 | `migrations/0008_vendas_manuais.sql` | Liberação de cursos com venda manual, valor recebido e atualização do faturamento |
 | `migrations/0009_plano_completo_manual.sql` | Plano completo registrado uma única vez pelo valor recebido pelo plano |
 | `migrations/0010_limpar_pedidos_recentes.sql` | Limpeza visual dos pedidos recentes, preservando vendas, faturamento e acessos |
-| `functions/criar-pagamento/` | Cria o pedido e abre o pagamento no Mercado Pago |
-| `functions/webhook-mercadopago/` | Recebe o aviso do Mercado Pago e libera (ou remove) os cursos |
-| `functions/conferir-pagamento/` | Consulta o Mercado Pago na volta do aluno, no painel e na rotina agendada |
-| `functions/_compartilhado/` | `pagamentos.js` e `mercadopago.js` (as regras, testadas em `testes/`) e `servicos.js` (ligação com o Supabase e o Mercado Pago) |
+| `migrations/0011_ocultar_vendas_de_teste.sql` | Oculta pedidos de teste dos relatórios administrativos sem apagar os registros |
+| `functions/` | Integração antiga de pagamentos online; não é necessária para o fluxo atual de Pix manual |
+| `functions/_compartilhado/` | Regras e serviços da integração antiga de pagamentos online |
 | `config.toml` | Configuração das funções |
 
 As funções são em JavaScript e rodam no Deno (servidor do Supabase). As regras ficam separadas da ligação com o

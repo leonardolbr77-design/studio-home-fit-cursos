@@ -415,7 +415,7 @@ const supabaseBackend = {
       return data.signedUrl
     },
     async listOrders({ from, to, status, search }) {
-      let q = (await client()).from('orders').select('*, order_items(title, kind, price)').order('created_at', { ascending: false }).limit(500)
+      let q = (await client()).from('orders').select('*, order_items(title, kind, price)').neq('payment_provider', 'test').order('created_at', { ascending: false }).limit(500)
       if (from) q = q.gte('created_at', from.toISOString())
       if (to) q = q.lt('created_at', to.toISOString())
       if (status && status !== 'all') q = q.eq('status', status)
@@ -448,7 +448,7 @@ const supabaseBackend = {
     async getStudent(userId) {
       const [enrollments, orders] = await Promise.all([
         must((await client()).from('enrollments').select('course_id, order_id, created_at').eq('user_id', userId).order('created_at')),
-        must((await client()).from('orders').select('*, order_items(title, kind, price)').eq('user_id', userId).order('created_at', { ascending: false })),
+        must((await client()).from('orders').select('*, order_items(title, kind, price)').eq('user_id', userId).neq('payment_provider', 'test').order('created_at', { ascending: false })),
       ])
       return { enrollments, orders }
     },

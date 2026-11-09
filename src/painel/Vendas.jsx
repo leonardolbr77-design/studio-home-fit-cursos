@@ -26,7 +26,7 @@ const ACTIONS = {
   refunded: {
     label: 'Estornar e remover acesso',
     title: 'Estornar este pedido?',
-    text: 'O aluno perde o acesso aos cursos deste pedido. Importante: o dinheiro é devolvido no painel do Mercado Pago (aqui só registramos o estorno e tiramos o acesso). Pedido de desistência feito em até 7 dias da compra deve ser aceito (Código de Defesa do Consumidor, art. 49).',
+    text: 'O aluno perde o acesso aos cursos deste pedido. A devolução do dinheiro deve ser feita por fora do site, pela mesma forma em que você recebeu. Esta ação apenas registra o estorno e remove o acesso. Pedido de desistência feito em até 7 dias da compra deve ser aceito (Código de Defesa do Consumidor, art. 49).',
     tone: 'danger',
   },
   cancelled: {
@@ -37,11 +37,7 @@ const ACTIONS = {
   },
 }
 
-// Resultados da conferência que mudaram algo no pedido
-const CHANGED = ['liberado', 'acesso_removido', 'failed', 'cancelled']
-
-// Quanto o aluno usou dos cursos deste pedido: ajuda a decidir um pedido de reembolso
-// e serve de prova numa contestação no Mercado Pago
+// Quanto o aluno usou dos cursos deste pedido: ajuda a analisar pedidos de reembolso.
 function OrderConsumption({ order }) {
   const c = useAsync(() => backend.admin.orderConsumption(order.id), [order.id])
   if (c.error) return null
@@ -110,37 +106,6 @@ export default function Vendas() {
   const orders = list.data ?? []
   const paid = orders.filter((o) => o.status === 'paid')
   const revenue = paid.reduce((s, o) => s + Number(o.total), 0)
-  const issues = useAsync(() => backend.admin.paymentIssues(), [])
-  const hasOnlinePayments = orders.some((o) => o.payment_provider === 'mercadopago')
-    || issues.data?.alerts?.length > 0
-    || issues.data?.paid_without_access?.length > 0
-    || issues.data?.access_without_payment?.length > 0
-    || Number(issues.data?.old_pending) > 0
-  const [checking, setChecking] = useState(false)
-
-  const reconcile = async () => {
-    setChecking(true)
-    try {
-      const r = await backend.admin.reconcilePayments()
-      const changed = Object.entries(r.results ?? {})
-        .filter(([k]) => CHANGED.includes(k))
-        .reduce((s, [, n]) => s + n, 0)
-      notify(
-        r.checked || r.repaired
-          ? `${int(r.checked)} pedido(s) conferido(s) no Mercado Pago, ${int(changed)} atualizado(s)` +
-              (r.repaired ? `, ${int(r.repaired)} acesso(s) corrigido(s).` : '.')
-          : 'Nenhum pedido pendente para conferir.',
-      )
-      list.reload()
-      issues.reload()
-      refreshSite()
-    } catch (e) {
-      notify(e.message, 'error')
-    } finally {
-      setChecking(false)
-    }
-  }
-
   const runAction = async () => {
     setBusy(true)
     try {
@@ -186,11 +151,6 @@ export default function Vendas() {
             <a href="#/admin/alunos" className="btn btn--primary">
               <Icone name="plus" size={17} /> Registrar venda em Alunos
             </a>
-            {hasOnlinePayments && (
-              <button type="button" className="btn btn--outline" onClick={reconcile} disabled={checking}>
-                {checking ? <span className="spinner" aria-hidden="true" /> : <Icone name="refresh" size={17} />} Conferir pagamentos
-              </button>
-            )}
             <button type="button" className="btn btn--outline" onClick={exportCsv} disabled={!orders.length}>
               <Icone name="download" size={17} /> Exportar planilha
             </button>

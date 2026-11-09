@@ -105,6 +105,7 @@ home-fit-cursos/
 | `migrations/0007_professores.sql` | Cards dos professores editáveis em Painel > Configurações |
 | `migrations/0008_vendas_manuais.sql` | Liberação de cursos com venda manual, valor recebido e atualização do faturamento |
 | `migrations/0009_plano_completo_manual.sql` | Plano completo registrado uma única vez pelo valor recebido pelo plano |
+| `migrations/0010_limpar_pedidos_recentes.sql` | Limpeza visual dos pedidos recentes, preservando vendas, faturamento e acessos |
 | `functions/criar-pagamento/` | Cria o pedido e abre o pagamento no Mercado Pago |
 | `functions/webhook-mercadopago/` | Recebe o aviso do Mercado Pago e libera (ou remove) os cursos |
 | `functions/conferir-pagamento/` | Consulta o Mercado Pago na volta do aluno, no painel e na rotina agendada |

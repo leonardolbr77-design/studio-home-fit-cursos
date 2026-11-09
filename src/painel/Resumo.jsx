@@ -6,8 +6,8 @@ import { backend } from '../servicos/banco'
 import { ORDER_STATUS, formatDate, shortId } from '../servicos/pedidos'
 import { GraficoDeArea, ListaDeBarras } from './graficos'
 import { PERIODS, brl, brlCompact, daysAgo, delta, endOfToday, int, pct } from './formatos'
-import { useAsync } from './hooks'
-import { Card, Empty, ErrorBox, PageHead, Segmented } from './interface'
+import { useAdmin, useAsync } from './hooks'
+import { Card, Confirm, Empty, ErrorBox, PageHead, Segmented } from './interface'
 
 const MONTHS = ['jan', 'fev', 'mar', 'abr', 'mai', 'jun', 'jul', 'ago', 'set', 'out', 'nov', 'dez']
 
@@ -45,12 +45,29 @@ function Kpi({ label, value, current, previous, hero, hint }) {
 }
 
 export default function Resumo() {
+  const { notify } = useAdmin()
+  const [confirmClear, setConfirmClear] = useState(false)
+  const [clearing, setClearing] = useState(false)
   const [period, setPeriod] = useState('30')
   const [showTable, setShowTable] = useState(false)
   const days = PERIODS.find((p) => p.id === period).days
 
   const stats = useAsync(() => backend.admin.stats(daysAgo(days), endOfToday()), [days])
   const recent = useAsync(() => backend.admin.recentOrders(8), [])
+
+  const clearRecent = async () => {
+    setClearing(true)
+    try {
+      await backend.admin.clearRecentOrders()
+      setConfirmClear(false)
+      recent.reload()
+      notify('Lista de pedidos recentes limpa. Vendas, faturamento e acessos foram preservados.')
+    } catch (e) {
+      notify(e.message, 'error')
+    } finally {
+      setClearing(false)
+    }
+  }
 
   const s = stats.data
   const unit = s?.unit ?? 'day'
@@ -181,14 +198,19 @@ export default function Resumo() {
           className="dash-grid__wide"
           title="Pedidos recentes"
           actions={
-            <a href="#/admin/vendas" className="btn btn--outline btn--sm">
-              Ver todas as vendas <Icone name="arrowRight" size={15} />
-            </a>
+            <>
+              <button type="button" className="btn btn--outline btn--sm" onClick={() => setConfirmClear(true)} disabled={clearing || recent.loading || !!recent.error || !recent.data?.length}>
+                Limpar recentes
+              </button>
+              <a href="#/admin/vendas" className="btn btn--outline btn--sm">
+                Ver todas as vendas <Icone name="arrowRight" size={15} />
+              </a>
+            </>
           }
         >
           <ErrorBox error={recent.error} onRetry={recent.reload} />
           {recent.data?.length === 0 ? (
-            <Empty icon="dollar" title="Nenhum pedido ainda" text="Os pedidos aparecem aqui assim que alguém comprar." />
+            <Empty icon="dollar" title="Nenhum pedido recente" text="Novos pedidos aparecerão aqui. O histórico completo continua disponível em Vendas." />
           ) : (
             <div className="xtable-wrap">
               <table className="xtable">
@@ -224,6 +246,16 @@ export default function Resumo() {
           )}
         </Card>
       </div>
+      <Confirm
+        open={confirmClear}
+        title="Limpar pedidos recentes?"
+        text="Os pedidos atuais deixarão de aparecer neste quadro para todos os administradores. O histórico em Vendas, o faturamento e os acessos dos alunos serão mantidos. Novos pedidos aparecerão normalmente."
+        confirmLabel="Limpar recentes"
+        tone="primary"
+        busy={clearing}
+        onConfirm={clearRecent}
+        onCancel={() => setConfirmClear(false)}
+      />
     </>
   )
 }

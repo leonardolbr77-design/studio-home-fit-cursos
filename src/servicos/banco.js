@@ -294,9 +294,10 @@ const supabaseBackend = {
       return must((await client()).rpc('admin_stats', { p_from: from.toISOString(), p_to: to.toISOString() }))
     },
     async recentOrders(limit = 8) {
-      return must(
-        (await client()).from('orders').select('*, order_items(title, kind, price)').order('created_at', { ascending: false }).limit(limit),
-      )
+      return must((await client()).rpc('admin_recent_orders', { p_limit: limit }))
+    },
+    async clearRecentOrders() {
+      return must((await client()).rpc('admin_clear_recent_orders'))
     },
     async listCourses() {
       const rows = await must(

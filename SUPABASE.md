@@ -32,6 +32,7 @@ No Supabase: **SQL Editor > New query**.
 7. Nova query: cole `supabase/migrations/0007_professores.sql` (cards dos professores editáveis em **Painel > Configurações**) e **Run**.
 8. Nova query: cole `supabase/migrations/0008_vendas_manuais.sql` (vendas registradas ao liberar cursos) e **Run**.
 9. Nova query: cole `supabase/migrations/0009_plano_completo_manual.sql` (venda manual do plano completo pelo valor do plano) e **Run**.
+10. Nova query: cole `supabase/migrations/0010_limpar_pedidos_recentes.sql` (limpeza visual dos pedidos recentes) e **Run**.
 
 Os arquivos podem ser rodados de novo sem duplicar nada. **Sempre na ordem**: se rodar um arquivo de novo, rode também
 todos os que vêm depois dele (cada um substitui algumas regras dos anteriores).
@@ -156,6 +157,17 @@ O botão só aparece com o plano ativo, cursos pendentes e sem outra compra paga
 Para vender um curso avulso, selecione-o na lista e use **Liberar**.
 O estorno do plano desconta seu valor e remove os acessos vinculados ao pedido, sem remover
 acessos anteriores independentes. Cursos futuros não são liberados automaticamente.
+
+### Limpar pedidos recentes
+
+Após aplicar `0010_limpar_pedidos_recentes.sql`, use **Painel > Pedidos recentes > Limpar recentes**
+e confirme. A limpeza é compartilhada entre administradores e persiste após recarregar a página.
+Ela oculta apenas os pedidos criados até a confirmação: novas vendas voltam a aparecer normalmente.
+Nada é apagado de **Vendas** e nenhum valor de faturamento, acesso ou estorno é alterado.
+Outras sessões abertas refletem a limpeza ao recarregar o painel.
+
+A lista continua limitada a **8 pedidos**, com índice por data para a consulta. Essa limpeza visual
+não reduz o tamanho do banco nem substitui uma política de retenção ou arquivamento.
 
 ## 5. Testar tudo antes do Mercado Pago (opcional)
 
@@ -287,6 +299,7 @@ Arquivos do servidor:
 - `supabase/migrations/0007_professores.sql`: cards dos professores editáveis no painel.
 - `supabase/migrations/0008_vendas_manuais.sql`: registro atômico de venda manual ao liberar cursos, sem alterar liberações antigas.
 - `supabase/migrations/0009_plano_completo_manual.sql`: venda manual do plano completo como um único item Combo.
+- `supabase/migrations/0010_limpar_pedidos_recentes.sql`: limpeza visual compartilhada dos recentes e índice por data.
 - `supabase/functions/criar-pagamento`: cria o pedido e o pagamento.
 - `supabase/functions/webhook-mercadopago`: confirma pagamentos, estornos e chargebacks.
 - `supabase/functions/conferir-pagamento`: confere pedidos direto no Mercado Pago (volta do aluno, painel e rotina).

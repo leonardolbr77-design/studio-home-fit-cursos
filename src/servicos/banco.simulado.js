@@ -315,7 +315,16 @@ export const backend = {
     },
     async recentOrders(limit = 8) {
       requireAdmin()
-      return db.orders.slice().sort((a, b) => b.created_at.localeCompare(a.created_at)).slice(0, limit).map((o) => ({ ...o, order_items: db.items.filter((i) => i.order_id === o.id) }))
+      if (!Number.isInteger(limit) || limit < 1 || limit > 8) err('O limite de pedidos recentes deve estar entre 1 e 8')
+      return db.orders.filter((o) => !settings.recent_orders_cleared_at || o.created_at > settings.recent_orders_cleared_at)
+        .sort((a, b) => b.created_at.localeCompare(a.created_at) || b.id.localeCompare(a.id))
+        .slice(0, limit).map((o) => ({ ...o, order_items: db.items.filter((i) => i.order_id === o.id) }))
+    },
+    async clearRecentOrders() {
+      requireAdmin()
+      await wait()
+      settings.recent_orders_cleared_at = now()
+      return settings.recent_orders_cleared_at
     },
     async listCourses() {
       requireAdmin()
@@ -606,6 +615,7 @@ export const backend = {
     async saveSettings(s) {
       requireAdmin()
       settings = {
+        ...settings,
         combo_title: s.comboTitle, combo_description: s.comboDescription, combo_price: s.comboPrice, combo_old_price: s.comboOldPrice,
         combo_installments: s.comboInstallments, combo_active: s.comboActive, combo_features: s.comboFeatures, test_mode: s.testMode,
         drip_enabled: s.dripEnabled, drip_days: s.dripDays,

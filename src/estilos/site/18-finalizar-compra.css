@@ -81,19 +81,19 @@
 }
 
 .stepper__item.is-current .stepper__dot {
-  border-color: #1f5bff;
-  color: #1f5bff;
-  box-shadow: 0 0 0 4px #edf1ff;
+  border-color: #127b91;
+  color: #127b91;
+  box-shadow: 0 0 0 4px #e5f3f6;
 }
 
 .stepper__item.is-done .stepper__dot {
-  border-color: #1f5bff;
-  background: #1f5bff;
+  border-color: #127b91;
+  background: #127b91;
   color: #ffffff;
 }
 
 .stepper__item.is-done::after {
-  background: #1f5bff;
+  background: #127b91;
 }
 
 .co__form,
@@ -161,13 +161,13 @@
 }
 
 .field input:focus {
-  border-color: #1f5bff;
+  border-color: #127b91;
   background: #ffffff;
-  box-shadow: 0 0 0 4px #edf1ff;
+  box-shadow: 0 0 0 4px #e5f3f6;
 }
 
 .field__control:focus-within svg {
-  color: #1f5bff;
+  color: #127b91;
 }
 
 .field--error input {
@@ -201,7 +201,7 @@
 
 .co__hint svg {
   flex-shrink: 0;
-  color: #1f5bff;
+  color: #127b91;
 }
 
 .pay-options {
@@ -238,15 +238,15 @@
 }
 
 .pay-option:has(input:focus-visible) {
-  outline: 3px solid #1f5bff;
+  outline: 3px solid #127b91;
   outline-offset: 2px;
 }
 
 .pay-option--active,
 .pay-option--active:hover {
-  border-color: #1f5bff;
-  background: #edf1ff;
-  box-shadow: 0 10px 24px -14px rgb(31 91 255 / 0.6);
+  border-color: #127b91;
+  background: #e5f3f6;
+  box-shadow: 0 10px 24px -14px rgb(18 123 145 / 0.6);
 }
 
 .pay-option__icon {
@@ -264,7 +264,7 @@
 }
 
 .pay-option--active .pay-option__icon {
-  background: #1f5bff;
+  background: #127b91;
   color: #ffffff;
 }
 
@@ -307,7 +307,7 @@
 }
 
 .pay-option--active .pay-option__radio {
-  border: 7px solid #1f5bff;
+  border: 7px solid #127b91;
 }
 
 .co__notice {
@@ -350,7 +350,7 @@
 }
 
 .co__termos a {
-  color: #1f5bff;
+  color: #127b91;
   font-weight: 600;
   text-decoration: underline;
   text-underline-offset: 2px;
@@ -500,7 +500,7 @@
 
 .co__guarantees svg {
   flex-shrink: 0;
-  color: #1f5bff;
+  color: #127b91;
   margin-top: 2px;
 }
 

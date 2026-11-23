@@ -6,6 +6,17 @@ export const TRAINER_LIMITS = { max: 4, name: 60, role: 60, cref: 40, bio: 400, 
 // Só links https do Instagram viram botão no site
 export const isInstagramUrl = (url) => /^https:\/\/(www\.)?instagram\.com\/[\w.\-/?=&%]+$/i.test(String(url ?? '').trim())
 
+// "@perfil" a partir do link (null se o link não for de um perfil, ex.: link de um post)
+export function instagramHandle(url) {
+  if (!isInstagramUrl(url)) return null
+  const first = new URL(String(url).trim()).pathname.split('/').filter(Boolean)[0] ?? ''
+  if (['p', 'reel', 'reels', 'stories', 'explore', 'tv'].includes(first.toLowerCase())) return null
+  return /^[\w.]{1,30}$/.test(first) ? first : null
+}
+
+// CREF sem os [colchetes] que sobram do texto de exemplo
+export const cleanCref = (cref) => String(cref ?? '').replace(/[[\]]/g, '').replace(/\s+/g, ' ').trim()
+
 const text = (v, max) => String(v ?? '').replace(/\s+/g, ' ').trim().slice(0, max)
 
 // Lista vinda do banco (ou do formulário) -> lista segura para mostrar; null = usar os professores do código

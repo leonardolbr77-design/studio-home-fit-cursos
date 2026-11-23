@@ -5,7 +5,7 @@
 */
 import assert from 'node:assert/strict'
 import { before, describe, test } from 'node:test'
-import { cleanTrainers, isInstagramUrl, trainerErrors } from '../src/servicos/professores.js'
+import { cleanCref, cleanTrainers, instagramHandle, isInstagramUrl, trainerErrors } from '../src/servicos/professores.js'
 import { como, criarBancoDeTeste, criarUsuario, tentar } from './apoio/banco-de-teste.js'
 
 let pg
@@ -86,5 +86,19 @@ describe('limpeza do que vai para o site', () => {
     assert.deepEqual(trainerErrors(karol), {})
     const e = trainerErrors({ ...karol, name: 'K', bio: ' ', instagram: 'instagram.com/x' })
     assert.deepEqual(Object.keys(e).sort(), ['bio', 'instagram', 'name'])
+  })
+
+  test('@ do Instagram tirado do link do perfil', () => {
+    assert.equal(instagramHandle('https://www.instagram.com/karol.martins.personal?bqrl=bjAzbTFtaXY4dGdi'), 'karol.martins.personal')
+    assert.equal(instagramHandle('https://instagram.com/studio_homefit/'), 'studio_homefit')
+    // link de post, link inválido ou de outro site: sem @
+    for (const sem of ['https://www.instagram.com/p/Cx1y2z3/', 'https://instagram.com/reel/abc', 'javascript:alert(1)', 'https://evil.com/karol', ''])
+      assert.equal(instagramHandle(sem), null, sem)
+  })
+
+  test('CREF sem os colchetes do texto de exemplo', () => {
+    assert.equal(cleanCref('CREF [015864-G/GO]'), 'CREF 015864-G/GO')
+    assert.equal(cleanCref('CREF 015864-G/GO'), 'CREF 015864-G/GO')
+    assert.equal(cleanCref(''), '')
   })
 })

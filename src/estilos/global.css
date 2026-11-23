@@ -131,13 +131,13 @@ button {
 }
 
 :focus-visible {
-  outline: 3px solid #1f5bff;
+  outline: 3px solid #127b91;
   outline-offset: 3px;
   border-radius: 6px;
 }
 
 ::selection {
-  background: #1f5bff;
+  background: #127b91;
   color: #ffffff;
 }
 

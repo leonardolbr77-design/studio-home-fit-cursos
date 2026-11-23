@@ -1,11 +1,11 @@
-// Logo do Studio HomeFit, na versão clara ou escura, com link para o topo.
-import logoBranca from '../imagens/logo-homefit-branca.svg'
-import logoEscura from '../imagens/logo-homefit-escura.svg'
+// Logo da Karol Martins Personal Trainer, na versão clara (fundo escuro) ou escura (fundo claro), com link para o topo.
+import logoClara from '../imagens/logo-karol-clara.webp'
+import logoEscura from '../imagens/logo-karol-escura.webp'
 
 export default function Logo({ light = false, className = '' }) {
   return (
     <a href="#inicio" className={`logo ${className}`}>
-      <img src={light ? logoBranca : logoEscura} alt="Studio HomeFit, ir para o início" width="626" height="178" />
+      <img src={light ? logoClara : logoEscura} alt="Karol Martins Personal Trainer, ir para o início" width="920" height="160" />
     </a>
   )
 }

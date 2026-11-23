@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="-4 -4 368 288" width="368" height="288" fill="none" stroke-linejoin="round">
   <!-- Mesmas setas do triangulo-direita.svg, só em contorno -->
-  <polygon points="130,20 360,150 130,280" stroke="#c9d6ff" stroke-width="2"/>
+  <polygon points="130,20 360,150 130,280" stroke="#bcdde5" stroke-width="2"/>
   <polygon points="65,10 295,140 65,270" stroke="#d6d9df" stroke-width="2"/>
   <polygon points="0,0 230,130 0,260" stroke="#e4e6ea" stroke-width="2"/>
 </svg>

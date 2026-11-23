@@ -1,9 +1,6 @@
 // Seção 1 da página inicial: banner com a foto da academia, título e botões.
 import Icone from '../componentes/Icone'
 import Logo from '../componentes/Logo'
-import dupla from '../imagens/dupla-homefit.webp'
-import dupla480 from '../imagens/dupla-homefit-480.webp'
-import dupla720 from '../imagens/dupla-homefit-720.webp'
 import fachada from '../imagens/banner-academia.webp'
 import fachada960 from '../imagens/banner-academia-960.webp'
 
@@ -21,7 +18,7 @@ export default function Banner() {
     <section className="hero" id="inicio">
       {/*
         Fundo: a fachada do Studio em preto e branco, no banner inteiro. No celular e no tablet ela
-        fica escurecida e quase toda atrás da dupla, então a versão de 960px basta.
+        aparece numa faixa embaixo do texto, então a versão de 960px basta.
       */}
       <img
         className="hero__bg"
@@ -46,25 +43,13 @@ export default function Banner() {
       <span className="hero__band" aria-hidden="true" />
       <span className="hero__band-esq" aria-hidden="true" />
 
-      {/* Detalhes discretos nas áreas escuras, sobre a fachada (ficam atrás do painel e da dupla) */}
+      {/* Detalhes discretos nas áreas escuras, sobre a fachada (ficam atrás do painel) */}
       {DECOR.map((d) => (
         <span key={d} className={`hero__deco hero__deco--${d}`} aria-hidden="true" />
       ))}
 
-      {/* Dupla de professores cruzando a borda do painel */}
-      <div className="hero__visual">
-        {/* o navegador baixa só o tamanho de que precisa: celular ~360px, tablet 560px, computador ~800px */}
-        <img
-          className="hero__duo"
-          src={dupla}
-          srcSet={`${dupla480} 480w, ${dupla720} 720w, ${dupla} 960w`}
-          sizes="(max-width: 640px) 92vw, (max-width: 980px) 560px, 802px"
-          alt="Professores do Studio HomeFit de braços cruzados, com a camiseta da marca"
-          width="960"
-          height="970"
-          fetchPriority="high"
-        />
-      </div>
+      {/* Celular e tablet: reserva a faixa da fachada embaixo do texto (no computador a fachada já fica ao lado) */}
+      <div className="hero__visual" aria-hidden="true" />
 
       {/* Logo da academia centralizada no topo do banner */}
       <div className="container hero__brand">

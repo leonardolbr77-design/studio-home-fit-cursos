@@ -116,8 +116,8 @@
   border-radius: 12px;
   display: grid;
   place-items: center;
-  background: rgb(31 91 255 / 0.15);
-  color: #5281ff;
+  background: rgb(18 123 145 / 0.15);
+  color: #4dabc4;
 }
 
 .secure-badge strong {

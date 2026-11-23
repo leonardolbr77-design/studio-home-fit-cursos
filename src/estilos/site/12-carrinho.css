@@ -71,7 +71,7 @@
   border-radius: 999px;
   display: grid;
   place-items: center;
-  background: #1f5bff;
+  background: #127b91;
   color: #ffffff;
 }
 
@@ -134,7 +134,7 @@
   object-fit: cover;
 }
 
-/* Plano: logo branca sobre o preto, no lugar da foto */
+/* Plano: o símbolo da logo (halter) sobre o preto, no lugar da foto */
 .citem__thumb--plan {
   display: grid;
   place-items: center;
@@ -160,8 +160,8 @@
   align-self: flex-start;
   padding: 3px 8px;
   border-radius: 6px;
-  background: #edf1ff;
-  color: #1f5bff;
+  background: #e5f3f6;
+  color: #127b91;
   font-size: 0.64rem;
   font-weight: 800;
   letter-spacing: 0.08em;

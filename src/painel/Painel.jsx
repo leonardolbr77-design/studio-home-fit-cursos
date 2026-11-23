@@ -10,7 +10,6 @@ import ListaDeCursos from './ListaDeCursos'
 import EditorDeCurso from './EditorDeCurso'
 import Vendas from './Vendas'
 import Alunos from './Alunos'
-import Cupons from './Cupons'
 import Configuracoes from './Configuracoes'
 import '../estilos/painel.css'
 
@@ -19,7 +18,6 @@ const NAV = [
   { id: 'cursos', label: 'Cursos', icon: 'book' },
   { id: 'vendas', label: 'Vendas', icon: 'dollar' },
   { id: 'alunos', label: 'Alunos', icon: 'users' },
-  { id: 'cupons', label: 'Cupons', icon: 'ticket' },
   { id: 'configuracoes', label: 'Configurações', icon: 'settings' },
 ]
 
@@ -50,8 +48,6 @@ function Section({ section, id }) {
       return <Vendas />
     case 'alunos':
       return <Alunos />
-    case 'cupons':
-      return <Cupons />
     case 'configuracoes':
       return <Configuracoes />
     default:

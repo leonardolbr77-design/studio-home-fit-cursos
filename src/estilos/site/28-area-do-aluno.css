@@ -44,14 +44,14 @@
   z-index: -1;
   inset: 0;
   border-radius: inherit;
-  background: #1f5bff;
+  background: #127b91;
   transform: scaleX(0);
   transform-origin: left;
   transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .header__account svg {
-  color: #1f5bff;
+  color: #127b91;
   transition:
     transform 0.3s cubic-bezier(0.22, 1, 0.36, 1),
     color 0.25s;
@@ -75,14 +75,14 @@
 .account__avatar.header__perfil {
   width: 32px;
   height: 32px;
-  background: #1f5bff;
+  background: #127b91;
   color: #ffffff;
   font-size: 0.7rem;
 }
 
 /* na área do aluno o botão fica azul */
 .header__conta.is-active {
-  background: #1f5bff;
+  background: #127b91;
 }
 
 .header__conta.is-active .header__account,
@@ -97,7 +97,7 @@
 
 @media (hover: hover) and (pointer: fine) {
   .header__conta:hover {
-    box-shadow: 0 10px 24px -12px rgb(31 91 255 / 0.9);
+    box-shadow: 0 10px 24px -12px rgb(18 123 145 / 0.9);
   }
 
   .header__conta:not(.is-active) .header__account:hover {
@@ -114,9 +114,9 @@
   }
 
   .header__perfil:hover {
-    background: #1f5bff;
+    background: #127b91;
     color: #ffffff;
-    box-shadow: 0 0 0 3px rgb(31 91 255 / 0.25);
+    box-shadow: 0 0 0 3px rgb(18 123 145 / 0.25);
   }
 
   .account__avatar.header__perfil:hover {
@@ -188,7 +188,7 @@
   bottom: 0;
   width: min(38%, 460px);
   height: 10px;
-  background: #1f5bff;
+  background: #127b91;
   clip-path: polygon(14px 0, 100% 0, 100% 100%, 0 100%);
 }
 
@@ -241,7 +241,7 @@
 }
 
 .member-top__tag {
-  color: #5281ff;
+  color: #4dabc4;
   font-size: 0.74rem;
   font-weight: 800;
   letter-spacing: 0.12em;
@@ -301,7 +301,7 @@
   display: block;
   height: 100%;
   border-radius: inherit;
-  background: #1f5bff;
+  background: #127b91;
   transition: width 0.5s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
@@ -349,9 +349,9 @@
   width: 44px;
   height: 44px;
   border-radius: 50%;
-  background: #1f5bff;
+  background: #127b91;
   color: #ffffff;
-  box-shadow: 0 8px 20px -6px rgb(31 91 255 / 0.8);
+  box-shadow: 0 8px 20px -6px rgb(18 123 145 / 0.8);
 }
 
 .mcourse__body {
@@ -363,7 +363,7 @@
 }
 
 .mcourse__tag {
-  color: #1f5bff;
+  color: #127b91;
   font-size: 0.68rem;
   font-weight: 800;
   letter-spacing: 0.1em;
@@ -397,7 +397,7 @@
 @media (hover: hover) {
   .mcourse:hover {
     transform: translateY(-4px);
-    box-shadow: 0 24px 40px -26px rgb(31 91 255 / 0.5);
+    box-shadow: 0 24px 40px -26px rgb(18 123 145 / 0.5);
   }
 
   .mcourse:hover .mcourse__media img {
@@ -425,7 +425,7 @@
   width: 64px;
   height: 64px;
   margin-bottom: 4px;
-  background: #1f5bff;
+  background: #127b91;
   color: #ffffff;
   transform: skewX(-10deg);
   box-shadow: 4px 4px 0 #0a0a0b;
@@ -517,8 +517,8 @@
   height: 64px;
   margin-bottom: 6px;
   border-radius: 50%;
-  background: #1f5bff;
-  box-shadow: 0 0 0 8px rgb(31 91 255 / 0.25);
+  background: #127b91;
+  box-shadow: 0 0 0 8px rgb(18 123 145 / 0.25);
 }
 
 .video__soon strong {
@@ -548,7 +548,7 @@
 }
 
 .player__module {
-  color: #1f5bff;
+  color: #127b91;
   font-size: 0.74rem;
   font-weight: 800;
   letter-spacing: 0.08em;
@@ -652,7 +652,7 @@
 }
 
 .pmod__title span {
-  color: #1f5bff;
+  color: #127b91;
   font-size: 0.68rem;
   font-weight: 800;
   letter-spacing: 0.1em;
@@ -727,14 +727,14 @@
 }
 
 .plesson.is-current {
-  background: #edf1ff;
+  background: #e5f3f6;
   color: #0a0a0b;
   font-weight: 700;
 }
 
 .plesson.is-current .plesson__status {
-  border-color: #1f5bff;
-  background: #1f5bff;
+  border-color: #127b91;
+  background: #127b91;
   color: #ffffff;
 }
 

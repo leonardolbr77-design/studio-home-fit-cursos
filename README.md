@@ -53,7 +53,6 @@ home-fit-cursos/
     ├── paginas/          telas que abrem por endereço próprio
     │   ├── PaginaDoCurso.jsx     página de cada curso (#/curso/<link>): aulas e compra
     │   ├── Entrar.jsx            login, cadastro e recuperar senha
-    │   ├── FinalizarCompra.jsx   dados do comprador, cupom e pagamento
     │   ├── Pedido.jsx            acompanhar o pedido depois de pagar
     │   ├── AreaDoAluno.jsx       "Meus cursos" e o player das aulas
     │   ├── MinhaConta.jsx        dados pessoais, senha e pedidos
@@ -69,7 +68,7 @@ home-fit-cursos/
     │   ├── Painel.jsx        estrutura: menu lateral e permissão de acesso
     │   ├── Resumo.jsx        faturamento, gráficos e últimos pedidos
     │   ├── ListaDeCursos.jsx, EditorDeCurso.jsx, PrecoEDesconto.jsx
-    │   ├── Vendas.jsx, Alunos.jsx, Cupons.jsx, Configuracoes.jsx
+    │   ├── Vendas.jsx, Alunos.jsx, Configuracoes.jsx
     │   ├── interface.jsx     peças de tela do painel (cartão, campo, confirmação...)
     │   ├── graficos.jsx      gráficos de área e de barras
     │   └── hooks.js, contexto.js, formatos.js, precos.js
@@ -123,7 +122,7 @@ Supabase justamente para os testes rodarem as mesmas regras no Node.
 | Textos fixos: benefícios, professores, perguntas | `src/dados/conteudo.js` |
 | Termos de Uso e Política de Privacidade | `src/dados/termos.js` e `src/dados/privacidade.js` (dados da empresa em `src/dados/empresa.js`) |
 | WhatsApp, Instagram, e-mail | Painel > Configurações (ou `src/dados/site.js` no modo demonstração) |
-| Cursos, preços, aulas, vídeos, cupons | Painel de ADM, sem mexer no código |
+| Cursos, preços, aulas, vídeos, professores | Painel de ADM, sem mexer no código |
 | Ordem das seções da página inicial | `src/Site.jsx` |
 
 ## Padrões do código

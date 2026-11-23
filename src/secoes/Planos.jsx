@@ -3,7 +3,7 @@ import Icone from '../componentes/Icone'
 import { BarraDeSeguranca } from '../componentes/Seguranca'
 import { formatBRL } from '../dados/site'
 import { useStore } from '../estado/hooks'
-import logoBranca from '../imagens/logo-homefit-branca.svg'
+import logoClara from '../imagens/logo-karol-clara.webp'
 
 const COMBO_ID = 'combo'
 
@@ -64,7 +64,7 @@ export default function Planos({ cartIds, onAdd }) {
           {/* Preço e compra */}
           <div className="offer__side">
             <div className="offer__top">
-              <img className="offer__logo" src={logoBranca} alt="Studio HomeFit" width="626" height="178" />
+              <img className="offer__logo" src={logoClara} alt="Karol Martins Personal Trainer" width="920" height="160" />
               {off > 0 ? <span className="offer__off">-{off}%</span> : <span className="offer__once">Pagamento único</span>}
             </div>
 

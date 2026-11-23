@@ -62,7 +62,7 @@
 .filter__bars--b i:nth-child(-n + 2),
 .filter__bars--c i,
 .filter__bars--all i {
-  background: #1f5bff;
+  background: #127b91;
 }
 
 .filter__count {
@@ -82,9 +82,9 @@
 }
 
 .filter--active {
-  background: #1f5bff;
+  background: #127b91;
   color: #ffffff;
-  box-shadow: 0 10px 20px -12px rgb(31 91 255 / 0.8);
+  box-shadow: 0 10px 20px -12px rgb(18 123 145 / 0.8);
 }
 
 .filter--active .filter__bars i {
@@ -100,7 +100,7 @@
 
 .filter--active .filter__count {
   background: #ffffff;
-  color: #1f5bff;
+  color: #127b91;
 }
 
 .courses__grid {
@@ -131,7 +131,7 @@
   right: 0;
   bottom: 0;
   height: 4px;
-  background: #1f5bff;
+  background: #127b91;
   transform: scaleX(0);
   transform-origin: left;
   transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
@@ -206,7 +206,7 @@
 }
 
 .course__peek-btn svg {
-  color: #1f5bff;
+  color: #127b91;
 }
 
 /* Nível no canto superior; "Mais vendido" na base da foto */
@@ -251,11 +251,11 @@
 }
 
 .level--a::before {
-  background: #5281ff;
+  background: #4dabc4;
 }
 
 .level--b::before {
-  background: #1f5bff;
+  background: #127b91;
 }
 
 .level--c::before {
@@ -279,7 +279,7 @@
   top: 12px;
   right: 14px;
   padding: 5px 11px;
-  background: #1f5bff;
+  background: #127b91;
   color: #ffffff;
   font-size: 0.78rem;
   font-weight: 800;
@@ -306,7 +306,7 @@
   font-weight: 800;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: #1f5bff;
+  color: #127b91;
 }
 
 .course__title {
@@ -359,7 +359,7 @@
 }
 
 .course__meta svg {
-  color: #1f5bff;
+  color: #127b91;
 }
 
 .course__foot {
@@ -411,8 +411,8 @@
   align-self: flex-start;
   padding: 3px 8px;
   border-radius: 6px;
-  background: #edf1ff;
-  color: #1f5bff;
+  background: #e5f3f6;
+  color: #127b91;
   font-weight: 800;
 }
 
@@ -429,7 +429,7 @@
 
 .course__cta.btn--primary {
   box-shadow:
-    0 12px 22px -14px rgb(31 91 255 / 0.9),
+    0 12px 22px -14px rgb(18 123 145 / 0.9),
     inset 0 -3px 0 rgb(0 0 0 / 0.16);
 }
 
@@ -440,7 +440,7 @@
 @media (hover: hover) and (pointer: fine) {
   .course__cta.btn--primary:hover:not(:disabled) {
     box-shadow:
-      0 18px 28px -14px rgb(31 91 255 / 1),
+      0 18px 28px -14px rgb(18 123 145 / 1),
       inset 0 -3px 0 rgb(0 0 0 / 0.16);
   }
 }

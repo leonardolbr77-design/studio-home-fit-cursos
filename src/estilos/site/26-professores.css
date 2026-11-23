@@ -69,7 +69,7 @@
   right: -10%;
   bottom: 30%;
   height: 10px;
-  background: #1f5bff;
+  background: #127b91;
   transform: skewY(-12deg);
   transform-origin: left;
 }
@@ -88,12 +88,14 @@
   mask: url('../../imagens/forma-canto.svg') center / contain no-repeat;
 }
 
-.team__duo {
+/* foto da Karol (recortada, fundo transparente) em pé sobre a fachada */
+.team__foto {
   position: absolute;
+  z-index: 1;
   left: 50%;
   bottom: 0;
   width: auto;
-  height: 90%;
+  height: 92%;
   max-width: none;
   translate: -50% 0;
   filter: drop-shadow(0 24px 30px rgb(0 0 0 / 0.45));
@@ -139,82 +141,240 @@
   min-width: 0;
 }
 
-/* Ficha do professor: tipografia no lugar de foto, selos e pílulas */
+/*
+  Ficha do professor, na linguagem do site: rabiscos no fundo, faixa azul na diagonal,
+  etiqueta inclinada com sombra dura, nome em duas cores e o Instagram numa faixa azul na base
+*/
 .trainer {
+  position: relative;
   flex: 1;
   display: flex;
   flex-direction: column;
-  padding: 30px 32px;
-  border: 1px solid rgb(255 255 255 / 0.09);
+  overflow: hidden;
+  isolation: isolate;
+  padding: 30px 32px 28px;
+  border: 1px solid rgb(255 255 255 / 0.08);
   border-radius: 16px;
-  background: #141518;
+  background: url('../../imagens/tinta-textura-clara.svg') center top / 1100px 690px repeat #121317;
   transition: border-color 0.3s;
 }
 
-.trainer__name {
-  margin: 0 0 6px;
+/* faixa azul cortando só o cantinho de cima (entra pela borda de cima e sai pela lateral) */
+.trainer::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  top: 15px;
+  right: -70px;
+  width: 200px;
+  height: 10px;
+  background: #127b91;
+  transform: rotate(35deg);
+}
+
+/* ✕ vazado bem discreto atrás do texto */
+.trainer__x {
+  position: absolute;
+  z-index: -1;
+  top: 42%;
+  right: -26px;
+  width: 170px;
+  height: 170px;
+  background: #ffffff;
+  opacity: 0.045;
+  -webkit-mask: url('../../imagens/forma-x-contorno.svg') center / contain no-repeat;
+  mask: url('../../imagens/forma-x-contorno.svg') center / contain no-repeat;
+  pointer-events: none;
+}
+
+/* espaço à direita: o texto nunca passa por baixo da faixa do canto */
+.trainer__top {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 16px;
+  margin-bottom: 18px;
+  padding-right: 44px;
+}
+
+/* cargo: etiqueta azul inclinada com sombra dura (como o "-52%" dos cursos) */
+.trainer__role {
+  display: inline-block;
+  margin-left: 4px;
+  padding: 6px 12px;
+  background: #127b91;
   color: #ffffff;
   font-family: 'Montserrat', sans-serif;
-  font-size: 1.6rem;
-  font-weight: 800;
-  line-height: 1.1;
+  font-size: 0.7rem;
+  font-weight: 900;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  transform: skewX(-12deg);
+  box-shadow: 3px 3px 0 #0a0a0b;
+}
+
+.trainer__role > span {
+  display: block;
+  transform: skewX(12deg);
+}
+
+.trainer__cref {
+  color: #9a9fa8;
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-variant-numeric: tabular-nums;
+}
+
+/* nome: primeira palavra em branco, o resto em azul, como os títulos do site */
+.trainer__name {
+  margin: 0;
+  color: #ffffff;
+  font-family: 'Montserrat', sans-serif;
+  font-size: clamp(1.8rem, 2.6vw, 2.5rem);
+  font-weight: 900;
+  line-height: 0.95;
+  letter-spacing: -0.01em;
   text-transform: uppercase;
   overflow-wrap: anywhere;
 }
 
-.trainer__meta {
-  color: #9a9fa8;
-  font-size: 0.9rem;
+.trainer__name span {
+  display: block;
+  color: #127b91;
 }
 
-.trainer__meta span {
-  color: #e4e6ea;
-  font-weight: 600;
+/* tracinho azul sob o nome */
+.trainer__name::after {
+  content: '';
+  display: block;
+  width: 44px;
+  height: 4px;
+  margin-top: 16px;
+  background: #127b91;
 }
 
+/* bio entre aspas */
 .trainer__bio {
-  max-width: 58ch;
-  margin: 16px 0 20px;
+  position: relative;
+  max-width: 60ch;
+  margin: 22px 0 24px;
+  padding-left: 30px;
   color: #c9ccd2;
   font-size: 0.96rem;
-  line-height: 1.65;
+  line-height: 1.7;
 }
 
-.trainer__foot {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 12px 20px;
-  margin-top: auto;
-  padding-top: 16px;
-  border-top: 1px solid rgb(255 255 255 / 0.08);
+.trainer__bio::before {
+  content: '\201C';
+  position: absolute;
+  top: -6px;
+  left: -2px;
+  color: #127b91;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 3rem;
+  font-weight: 900;
+  line-height: 1;
 }
 
 .trainer__spec {
-  color: #e4e6ea;
-  font-size: 0.9rem;
-  font-weight: 600;
+  margin-top: auto;
+  padding-top: 18px;
+  border-top: 1px solid rgb(255 255 255 / 0.08);
 }
 
 .trainer__spec strong {
   display: block;
-  margin-bottom: 2px;
+  margin-bottom: 12px;
   color: #6b7079;
   font-size: 0.68rem;
-  font-weight: 700;
-  letter-spacing: 0.14em;
+  font-weight: 800;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
 }
 
-.trainer__social {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
+/* especialidades: etiquetas inclinadas, escuras, com a sombra dura azul */
+.trainer__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 12px;
+  padding-left: 4px;
+}
+
+.trainer__tags li {
+  padding: 6px 12px;
+  border: 1px solid rgb(255 255 255 / 0.12);
+  background: #1b1d23;
   color: #ffffff;
-  font-size: 0.85rem;
+  font-size: 0.8rem;
+  font-weight: 800;
+  transform: skewX(-12deg);
+  box-shadow: 3px 3px 0 #127b91;
+}
+
+.trainer__tags li > span {
+  display: block;
+  transform: skewX(12deg);
+}
+
+/* Instagram: faixa azul de ponta a ponta na base da ficha, com o @ do perfil */
+.trainer__ig {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: auto -32px -28px;
+  padding: 14px 32px;
+  background: #127b91;
+  color: #ffffff;
+  transition: background-color 0.25s;
+}
+
+.trainer__spec + .trainer__ig {
+  margin-top: 24px;
+}
+
+.trainer__ig-icon {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: rgb(255 255 255 / 0.16);
+}
+
+.trainer__ig-text {
+  display: grid;
+  flex: 1;
+  min-width: 0;
+  line-height: 1.25;
+}
+
+.trainer__ig-text small {
+  color: rgb(255 255 255 / 0.78);
+  font-size: 0.72rem;
   font-weight: 700;
-  transition: color 0.2s;
+}
+
+.trainer__ig-text strong {
+  overflow: hidden;
+  font-size: 0.95rem;
+  font-weight: 800;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.trainer__ig > svg {
+  flex: none;
+  transition: translate 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* computador: com uma ficha só, a foto fica um pouco mais baixa (sem vão vazio na ficha) */
+@media (min-width: 1101px) {
+  .team__layout--solo .team__visual {
+    min-height: 540px;
+  }
 }
 
 /* Credenciais da equipe: lista simples com ✓ */
@@ -233,8 +393,12 @@
 
 .team__trust svg {
   flex-shrink: 0;
-  margin-top: 3px;
-  color: #5281ff;
+  box-sizing: content-box;
+  margin-top: 1px;
+  padding: 4px;
+  background: #127b91;
+  color: #ffffff;
+  box-shadow: 2px 2px 0 #0a0a0b;
 }
 
 .team__trust strong {
@@ -252,13 +416,17 @@
   line-height: 1.45;
 }
 
-@media (hover: hover) {
+@media (hover: hover) and (pointer: fine) {
   .trainer:hover {
     border-color: rgb(255 255 255 / 0.2);
   }
 
-  .trainer__social:hover {
-    color: #5281ff;
+  .trainer__ig:hover {
+    background: #0d6578;
+  }
+
+  .trainer__ig:hover > svg {
+    translate: 4px 0;
   }
 }
 
@@ -279,6 +447,11 @@
 
   .team__trust {
     grid-column: 1 / -1;
+  }
+
+  /* uma pessoa só: a ficha na largura toda */
+  .team__layout--solo .team__people {
+    grid-template-columns: 1fr;
   }
 }
 
@@ -321,8 +494,14 @@
     padding: 24px 20px;
   }
 
-  .trainer__name {
-    font-size: 1.3rem;
+  .trainer__ig {
+    margin-inline: -20px;
+    margin-bottom: -24px;
+    padding-inline: 20px;
+  }
+
+  .trainer__bio {
+    padding-left: 24px;
   }
 }
 

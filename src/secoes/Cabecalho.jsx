@@ -2,8 +2,8 @@
 import { useEffect, useRef, useState } from 'react'
 import Icone from '../componentes/Icone'
 import { useAuth, useStore } from '../estado/hooks'
-import logoBranca from '../imagens/logo-homefit-branca.svg'
-import logoEscura from '../imagens/logo-homefit-escura.svg'
+import logoClara from '../imagens/logo-karol-clara.webp'
+import logoEscura from '../imagens/logo-karol-escura.webp'
 
 const LINKS = [
   { href: '#cursos', label: 'Cursos' },
@@ -188,8 +188,8 @@ export default function Cabecalho({ page, cartCount, onOpenCart }) {
         {/* Cápsula flutuante: logo (ao rolar) + menu + conta + carrinho */}
         <div className="header__bar">
           <a href="#inicio" className="header__logo" onClick={close} aria-label="Studio HomeFit, ir para o início" tabIndex={marca ? 0 : -1}>
-            <img className="header__logo-clara" src={logoBranca} alt="" width="626" height="178" />
-            <img className="header__logo-escura" src={logoEscura} alt="" width="626" height="178" />
+            <img className="header__logo-clara" src={logoClara} alt="" width="920" height="160" />
+            <img className="header__logo-escura" src={logoEscura} alt="" width="920" height="160" />
           </a>
 
           <nav id="menu-principal" className="nav" aria-label="Principal">

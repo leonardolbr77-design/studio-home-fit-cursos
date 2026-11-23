@@ -594,22 +594,6 @@ export const backend = {
       if (role !== 'admin' && db.profiles.filter((p) => p.role === 'admin').length <= 1 && profileOf(userId).role === 'admin') err('O site precisa de pelo menos um administrador')
       profileOf(userId).role = role
     },
-    async listCoupons() {
-      return db.coupons.slice()
-    },
-    async saveCoupon(c) {
-      requireAdmin()
-      if (!/^[A-Z0-9_-]{3,30}$/.test(c.code)) err('Algum valor está fora do permitido. Confira os campos.')
-      if (db.coupons.some((x) => x.code === c.code && x.id !== c.id)) err('Já existe um registro com esse valor (ex.: link do curso ou código do cupom).')
-      const row = { code: c.code, kind: c.kind, value: c.value, active: c.active, starts_at: c.startsAt || null, expires_at: c.expiresAt || null, max_uses: c.maxUses || null }
-      if (c.id) return Object.assign(db.coupons.find((x) => x.id === c.id), row)
-      const n = { id: uid(), used_count: 0, created_at: now(), ...row }
-      db.coupons.unshift(n)
-      return n
-    },
-    async deleteCoupon(id) {
-      db.coupons = db.coupons.filter((c) => c.id !== id)
-    },
     async getSettings() {
       return toSettings(settings)
     },

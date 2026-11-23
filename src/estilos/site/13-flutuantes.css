@@ -11,9 +11,9 @@
   border-radius: 50%;
   display: grid;
   place-items: center;
-  background: #1f5bff;
+  background: #127b91;
   color: #ffffff;
-  box-shadow: 0 12px 28px -10px rgb(31 107 255 / 0.6);
+  box-shadow: 0 12px 28px -10px rgb(18 123 145 / 0.6);
   transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
@@ -57,5 +57,5 @@
   border-radius: 50%;
   display: grid;
   place-items: center;
-  background: #1f5bff;
+  background: #127b91;
 }

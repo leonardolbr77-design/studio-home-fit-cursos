@@ -49,12 +49,12 @@
 
 .benefits .shape--squares {
   --m: url('../../imagens/forma-quadrados.svg');
-  background: #1f5bff;
+  background: #127b91;
 }
 
 .benefits .shape--corner {
   --m: url('../../imagens/forma-canto.svg');
-  background: #1f5bff;
+  background: #127b91;
   bottom: 0;
   left: 0;
   width: 130px;
@@ -122,7 +122,7 @@
   right: 0;
   bottom: 0;
   height: 3px;
-  background: #1f5bff;
+  background: #127b91;
   transform: scaleX(0);
   transform-origin: left;
   transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
@@ -136,7 +136,7 @@
   width: 52px;
   height: 44px;
   margin-left: 6px;
-  background: #1f5bff;
+  background: #127b91;
   color: #ffffff;
   transform: skewX(-12deg);
   box-shadow: 4px 4px 0 #0a0a0b;
@@ -165,7 +165,7 @@
   height: 3px;
   margin-top: 10px;
   border-radius: 3px;
-  background: #1f5bff;
+  background: #127b91;
 }
 
 .benefit p {
@@ -178,7 +178,7 @@
 @media (hover: hover) {
   .benefit:hover {
     transform: translateY(-4px);
-    border-color: rgb(31 91 255 / 0.35);
+    border-color: rgb(18 123 145 / 0.35);
     box-shadow: 0 22px 40px -24px rgb(10 10 11 / 0.4);
   }
 

@@ -3,7 +3,7 @@ import { useEffect } from 'react'
 import Icone from './Icone'
 import { formatBRL, img } from '../dados/site'
 import { useStore } from '../estado/hooks'
-import logoBranca from '../imagens/logo-homefit-branca.svg'
+import simbolo from '../imagens/logo-karol-simbolo.webp'
 
 // Dados completos do item (curso ou plano) para o card do carrinho
 function details(item, store) {
@@ -81,7 +81,7 @@ export default function Carrinho({ open, items, onClose, onRemove, whatsappUrl }
                   <li className="citem" key={item.id}>
                     <span className={`citem__thumb ${plan ? 'citem__thumb--plan' : ''}`}>
                       {plan ? (
-                        <img src={logoBranca} alt="" />
+                        <img src={simbolo} alt="" />
                       ) : (
                         item.image && <img src={img(item.image, 240)} alt="" />
                       )}

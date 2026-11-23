@@ -63,7 +63,7 @@
 }
 
 .hl {
-  color: #1f5bff;
+  color: #127b91;
 }
 
 /* Rótulo de seção: ✕✕✕ + texto, igual ao "CURSOS ONLINE" do banner */
@@ -93,7 +93,7 @@
 }
 
 .eyebrow--dark::before {
-  background: #1f5bff;
+  background: #127b91;
 }
 
 .skip-link {
@@ -101,7 +101,7 @@
   left: 16px;
   top: -60px;
   z-index: 200;
-  background: #1f5bff;
+  background: #127b91;
   color: #ffffff;
   padding: 10px 16px;
   border-radius: 10px;

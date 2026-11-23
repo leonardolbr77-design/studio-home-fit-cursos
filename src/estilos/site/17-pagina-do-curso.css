@@ -40,7 +40,7 @@
 
 .curso-topo__off {
   padding: 4px 10px;
-  background: #1f5bff;
+  background: #127b91;
   color: #ffffff;
   font-size: 0.78rem;
   font-weight: 800;
@@ -50,7 +50,7 @@
 
 .curso-topo__tag {
   margin-top: 18px;
-  color: #5281ff;
+  color: #4dabc4;
   font-size: 0.78rem;
   font-weight: 800;
   letter-spacing: 0.14em;
@@ -90,7 +90,7 @@
 }
 
 .curso-topo__meta svg {
-  color: #5281ff;
+  color: #4dabc4;
 }
 
 /* Corpo: conteúdo à esquerda, compra à direita */
@@ -125,7 +125,7 @@
 }
 
 .curso-titulo svg {
-  color: #1f5bff;
+  color: #127b91;
 }
 
 .curso-desc {
@@ -194,8 +194,8 @@
   width: 72px;
   height: 72px;
   border-radius: 50%;
-  background: #1f5bff;
-  box-shadow: 0 0 0 10px rgb(31 91 255 / 0.25);
+  background: #127b91;
+  box-shadow: 0 0 0 10px rgb(18 123 145 / 0.25);
   transition:
     transform 0.3s ease,
     box-shadow 0.3s ease;
@@ -211,7 +211,7 @@
 }
 
 .curso-apresentacao__texto small {
-  color: #8fb0ff;
+  color: #93cbd7;
   font-size: 0.72rem;
   font-weight: 800;
   letter-spacing: 0.14em;
@@ -232,7 +232,7 @@
 
   .curso-apresentacao__capa:hover .curso-apresentacao__play {
     transform: scale(1.08);
-    box-shadow: 0 0 0 14px rgb(31 91 255 / 0.22);
+    box-shadow: 0 0 0 14px rgb(18 123 145 / 0.22);
   }
 }
 
@@ -249,9 +249,9 @@
   gap: 12px;
   margin-top: 14px;
   padding: 14px 16px;
-  border: 1px solid #d6e0ff;
+  border: 1px solid #cbe6ec;
   border-radius: 14px;
-  background: #edf1ff;
+  background: #e5f3f6;
   color: #33363d;
   font-size: 0.9rem;
   line-height: 1.5;
@@ -260,7 +260,7 @@
 .curso-libera svg {
   flex-shrink: 0;
   margin-top: 2px;
-  color: #1f5bff;
+  color: #127b91;
 }
 
 .curso-modulo {
@@ -274,8 +274,8 @@
 }
 
 .curso-modulo[open] {
-  border-color: rgb(31 91 255 / 0.35);
-  box-shadow: 0 16px 32px -26px rgb(31 91 255 / 0.6);
+  border-color: rgb(18 123 145 / 0.35);
+  box-shadow: 0 16px 32px -26px rgb(18 123 145 / 0.6);
 }
 
 .curso-modulo summary {
@@ -298,14 +298,14 @@
   width: 36px;
   height: 36px;
   border-radius: 10px;
-  background: #edf1ff;
-  color: #1f5bff;
+  background: #e5f3f6;
+  color: #127b91;
   font-weight: 800;
   font-variant-numeric: tabular-nums;
 }
 
 .curso-modulo[open] .curso-modulo__n {
-  background: #1f5bff;
+  background: #127b91;
   color: #ffffff;
 }
 
@@ -349,7 +349,7 @@
 
 .curso-aulas li svg {
   flex: none;
-  color: #1f5bff;
+  color: #127b91;
 }
 
 .curso-aulas li span {
@@ -389,7 +389,7 @@
 
 .curso-inclui svg {
   flex: none;
-  color: #1f5bff;
+  color: #127b91;
 }
 
 /* Caixa de compra */
@@ -416,8 +416,8 @@
   gap: 6px;
   padding: 5px 10px;
   border-radius: 999px;
-  background: #edf1ff;
-  color: #1f5bff;
+  background: #e5f3f6;
+  color: #127b91;
   font-size: 0.75rem;
   font-weight: 700;
   margin-bottom: 10px;
@@ -462,7 +462,7 @@
 }
 
 .buybox__trust svg {
-  color: #1f5bff;
+  color: #127b91;
 }
 
 .curso-vazio {

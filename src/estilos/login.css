@@ -59,7 +59,7 @@
 }
 
 .auth__faixa::before {
-  background: #1f5bff;
+  background: #127b91;
   clip-path: polygon(calc(100% - 22px) 0, 100% 0, 100% 100%, calc(100% - 64px) 100%);
 }
 
@@ -96,7 +96,7 @@
   left: 0;
   width: 170px;
   height: 170px;
-  background: #1f5bff;
+  background: #127b91;
   -webkit-mask-image: url('../imagens/forma-canto.svg');
   mask-image: url('../imagens/forma-canto.svg');
   transform: scaleX(-1);
@@ -108,7 +108,7 @@
   left: 26px;
   width: 10px;
   height: 90px;
-  background: #1f5bff;
+  background: #127b91;
   -webkit-mask-image: url('../imagens/forma-quadrados.svg');
   mask-image: url('../imagens/forma-quadrados.svg');
 }
@@ -129,7 +129,7 @@
   left: min(592px, 70%);
   width: 22px;
   height: 22px;
-  background: #1f5bff;
+  background: #127b91;
   -webkit-mask-image: url('../imagens/forma-x.svg');
   mask-image: url('../imagens/forma-x.svg');
 }
@@ -169,7 +169,7 @@
 .auth__xxx {
   display: flex;
   gap: 1px;
-  color: #1f5bff;
+  color: #127b91;
 }
 
 .auth__headline {
@@ -183,7 +183,7 @@
 }
 
 .auth__headline span {
-  color: #1f5bff;
+  color: #127b91;
 }
 
 @keyframes authFoto {
@@ -342,8 +342,8 @@
   width: 68px;
   height: 68px;
   border-radius: 50%;
-  background: #edf1ff;
-  color: #1f5bff;
+  background: #e5f3f6;
+  color: #127b91;
 }
 
 .adone__icon--warn {
@@ -389,9 +389,9 @@
 }
 
 .afield__control input:focus {
-  border-color: #1f5bff;
+  border-color: #127b91;
   background: #ffffff;
-  box-shadow: 0 0 0 4px rgb(31 91 255 / 0.12);
+  box-shadow: 0 0 0 4px rgb(18 123 145 / 0.12);
 }
 
 .afield__control:has(.afield__eye) input {
@@ -445,7 +445,7 @@
   display: inline-flex;
   align-items: center;
   gap: 4px;
-  color: #1f5bff;
+  color: #127b91;
   font-size: 0.86rem;
   font-weight: 700;
 }
@@ -473,7 +473,7 @@
   width: 18px;
   height: 18px;
   margin-top: 2px;
-  accent-color: #1f5bff;
+  accent-color: #127b91;
 }
 
 .acheck--error span {
@@ -481,7 +481,7 @@
 }
 
 .acheck a {
-  color: #1f5bff;
+  color: #127b91;
   font-weight: 700;
   text-decoration: underline;
   text-underline-offset: 2px;
@@ -545,7 +545,7 @@
 }
 
 .strength__bars--3 i:nth-child(-n + 3) {
-  background: #1f5bff;
+  background: #127b91;
 }
 
 .strength__bars--4 i {

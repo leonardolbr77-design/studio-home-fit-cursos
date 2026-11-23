@@ -197,24 +197,16 @@ export const PAINS = [
   },
 ]
 
-// Professores da seção "Professores" — troque os textos entre [colchetes] pelos dados reais.
-// A ordem segue a foto da dupla: a professora à esquerda e o professor à direita.
+// Professores da seção "Professores" quando nada foi salvo em Painel > Configurações > Professores
+// (o que estiver salvo no painel é o que vale no site).
 export const TRAINERS = [
   {
     name: 'Karol Martins',
     role: 'Personal Trainer',
-    cref: 'CREF [000000-G/GO]',
-    bio: 'Especialista em técnica de execução e prevenção de lesões. Ensina cada movimento com calma, do ajuste da postura à progressão de carga.',
-    specialties: ['Execução', 'Mobilidade', 'Treino feminino'],
-    instagram: '',
-  },
-  {
-    name: 'Leonardo',
-    role: 'Personal Trainer',
-    cref: 'CREF [000000-G/GO]',
-    bio: 'Focado em força e hipertrofia com segurança. Mostra os erros mais comuns e como corrigir cada um, série por série.',
-    specialties: ['Hipertrofia', 'Força', 'Biomecânica'],
-    instagram: '',
+    cref: 'CREF 015864-G/GO',
+    bio: 'Graduada em Educação Física (Bacharelado/Licenciatura). Atuo há 5 anos na área, com mais de 100 alunos atendidos entre presencial e online, sou proprietária do Studio Homefit. Meu Propósito é oferecer um treinamento de musculação seguro, eficiente e individualizado, respeitando as necessidades e os objetivos de cada pessoa, sempre com base no conhecimento científico e na qualidade do movimento.',
+    specialties: ['Cinesiologia e Biomecânica', 'Emagrecimento'],
+    instagram: 'https://www.instagram.com/karol.martins.personal',
   },
 ]
 

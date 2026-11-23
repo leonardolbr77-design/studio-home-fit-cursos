@@ -10,8 +10,8 @@
 .aform--loading .spinner,
 .adm-gate .spinner,
 .xdrawer .btn--outline .spinner {
-  border-color: rgb(31 91 255 / 0.2);
-  border-top-color: #1f5bff;
+  border-color: rgb(18 123 145 / 0.2);
+  border-top-color: #127b91;
 }
 
 .spinner--light {
@@ -81,7 +81,7 @@
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  background: #1f5bff;
+  background: #127b91;
   color: #ffffff;
   font-family: 'Montserrat', sans-serif;
   font-size: 0.78rem;
@@ -129,8 +129,8 @@
   margin-top: 6px;
   padding: 2px 8px;
   border-radius: 6px;
-  background: #edf1ff;
-  color: #1f5bff;
+  background: #e5f3f6;
+  color: #127b91;
   font-size: 0.68rem;
   font-style: normal;
   font-weight: 800;
@@ -160,7 +160,7 @@
 }
 
 .account__menu svg {
-  color: #1f5bff;
+  color: #127b91;
 }
 
 /* Situação do pedido: cor + ícone + texto */
@@ -215,8 +215,8 @@
 }
 
 .co__done-icon--blue {
-  background: #edf1ff;
-  color: #1f5bff;
+  background: #e5f3f6;
+  color: #127b91;
 }
 
 .co__coupon {
@@ -250,7 +250,7 @@
 }
 
 .co__coupon input:focus {
-  border-color: #1f5bff;
+  border-color: #127b91;
   background: #ffffff;
 }
 
@@ -330,7 +330,7 @@
 }
 
 .acard h2 svg {
-  color: #1f5bff;
+  color: #127b91;
 }
 
 .acard__field {
@@ -354,7 +354,7 @@
 }
 
 .acard__field input:focus {
-  border-color: #1f5bff;
+  border-color: #127b91;
   background: #ffffff;
 }
 
@@ -407,8 +407,8 @@
 }
 
 .aorders a:hover {
-  border-color: #d9e2ff;
-  background: #edf1ff;
+  border-color: #cde8ee;
+  background: #e5f3f6;
 }
 
 .aorders__main {
@@ -472,8 +472,8 @@
 }
 
 .order-card--wait .order-card__icon {
-  background: #edf1ff;
-  color: #1f5bff;
+  background: #e5f3f6;
+  color: #127b91;
 }
 
 .order-card--error .order-card__icon {

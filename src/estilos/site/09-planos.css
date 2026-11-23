@@ -47,8 +47,8 @@
   gap: 6px;
   padding: 6px 12px;
   border-radius: 999px;
-  background: #edf1ff;
-  color: #1f5bff;
+  background: #e5f3f6;
+  color: #127b91;
   font-size: 0.72rem;
   font-weight: 800;
   letter-spacing: 0.1em;
@@ -137,15 +137,15 @@
   width: 24px;
   height: 24px;
   border-radius: 50%;
-  background: #1f5bff;
+  background: #127b91;
   color: #ffffff;
-  box-shadow: 0 4px 10px -4px rgb(31 91 255 / 0.7);
+  box-shadow: 0 4px 10px -4px rgb(18 123 145 / 0.7);
 }
 
 @media (hover: hover) and (pointer: fine) {
   .offer__features li:hover {
-    border-color: #cfd9fb;
-    background: #f0f4ff;
+    border-color: #c6e2e8;
+    background: #ebf6f8;
   }
 }
 
@@ -177,7 +177,7 @@
 .offer__off {
   flex-shrink: 0;
   padding: 6px 12px;
-  background: #1f5bff;
+  background: #127b91;
   color: #ffffff;
   font-family: 'Montserrat', sans-serif;
   font-size: 0.9rem;
@@ -255,8 +255,8 @@
   margin-top: 14px;
   padding: 7px 12px;
   border-radius: 8px;
-  background: rgb(31 91 255 / 0.18);
-  color: #8fb0ff;
+  background: rgb(18 123 145 / 0.18);
+  color: #93cbd7;
   font-size: 0.82rem;
   font-weight: 700;
 }
@@ -280,7 +280,7 @@
 .offer__perks svg {
   flex-shrink: 0;
   margin-top: 1px;
-  color: #6f97ff;
+  color: #74bccb;
 }
 
 .offer__side .btn--added {
@@ -323,9 +323,9 @@
   width: 44px;
   height: 44px;
   border-radius: 50%;
-  background: #1f5bff;
+  background: #127b91;
   color: #ffffff;
-  box-shadow: 0 0 0 5px rgb(31 91 255 / 0.22);
+  box-shadow: 0 0 0 5px rgb(18 123 145 / 0.22);
 }
 
 .offer__guarantee > div {
@@ -354,8 +354,8 @@
 }
 
 .pricing .secure-badge__icon {
-  background: #edf1ff;
-  color: #1f5bff;
+  background: #e5f3f6;
+  color: #127b91;
 }
 
 .pricing .secure-bar__pay {

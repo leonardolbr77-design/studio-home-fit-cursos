@@ -74,8 +74,9 @@
   max-width: none;
 }
 
+/* espaço para a logo inteira (a da Karol é mais comprida: ~173px a 30px de altura) */
 .header--marca .header__logo {
-  max-width: 150px;
+  max-width: 210px;
   margin-right: 4px;
   padding: 0 12px 0 14px;
   opacity: 1;
@@ -122,7 +123,7 @@
 
 .nav__link.is-active {
   color: #ffffff;
-  background: #1f5bff;
+  background: #127b91;
 }
 
 /*
@@ -184,10 +185,10 @@
 
   /* carrinho: fica azul com um anel de brilho e o número dá um pulo */
   .header__actions .icon-btn:hover {
-    background: #1f5bff;
+    background: #127b91;
     box-shadow:
-      0 0 0 4px rgb(31 91 255 / 0.25),
-      0 10px 22px -8px rgb(31 91 255 / 0.9);
+      0 0 0 4px rgb(18 123 145 / 0.25),
+      0 10px 22px -8px rgb(18 123 145 / 0.9);
   }
 
   .header__actions .icon-btn:hover .icon-btn__badge {
@@ -195,10 +196,10 @@
   }
 
   .burger:hover {
-    background: #1748d6;
+    background: #0d6578;
     box-shadow:
-      0 0 0 4px rgb(31 91 255 / 0.25),
-      0 10px 22px -8px rgb(31 91 255 / 0.9);
+      0 0 0 4px rgb(18 123 145 / 0.25),
+      0 10px 22px -8px rgb(18 123 145 / 0.9);
   }
 
   .header__logo:hover {
@@ -238,7 +239,7 @@
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  background: #1f5bff;
+  background: #127b91;
   transition: background-color 0.2s;
 }
 
@@ -370,7 +371,7 @@
 
   .nav__link.is-active {
     background: none;
-    color: #5281ff;
+    color: #4dabc4;
   }
 
   .nav__luz {
@@ -378,7 +379,7 @@
   }
 
   .nav__link.is-active .nav__arrow {
-    color: #5281ff;
+    color: #4dabc4;
   }
 
   /* links e botões entram em cascata quando o menu abre */
@@ -398,7 +399,7 @@
     font-size: 0.75rem;
     font-weight: 700;
     letter-spacing: 0.1em;
-    color: #5281ff;
+    color: #4dabc4;
   }
 
   .nav__arrow {
@@ -457,7 +458,7 @@
   .header--solido {
     background: url('../../imagens/rabiscos-cabecalho-escuro.svg') left center / 640px 64px repeat-x #ffffff;
     box-shadow:
-      inset 0 -2px 0 #1f5bff,
+      inset 0 -2px 0 #127b91,
       0 10px 24px -18px rgb(10 10 11 / 0.35);
   }
 
@@ -516,7 +517,7 @@
   .burger {
     width: 42px;
     height: 42px;
-    box-shadow: 0 8px 18px -8px rgb(31 91 255 / 0.8);
+    box-shadow: 0 8px 18px -8px rgb(18 123 145 / 0.8);
   }
 
   .burger span {

@@ -18,7 +18,7 @@
 
 /*
   Fachada do Studio no banner inteiro, nítida e em preto e branco.
-  Ancorada à direita: o letreiro aparece no espaço escuro ao lado da dupla.
+  Ancorada à direita: o letreiro aparece no espaço escuro ao lado do painel.
 */
 .hero__bg {
   position: absolute;
@@ -28,7 +28,7 @@
   height: 100%;
   object-fit: cover;
   object-position: 85% 22%;
-  /* preto e branco natural, um pouco escurecido para a dupla e o menu se destacarem */
+  /* preto e branco natural, um pouco escurecido para o menu e os detalhes se destacarem */
   filter: grayscale(1) contrast(1.1) brightness(0.55);
   pointer-events: none;
 }
@@ -78,7 +78,7 @@
 }
 
 .hero__edge::before {
-  background: #1f5bff;
+  background: #127b91;
   clip-path: polygon(calc(98% + 12px) 0, calc(98% + 22px) 0, calc(76% + 22px) 100%, calc(76% + 12px) 100%);
 }
 
@@ -110,7 +110,7 @@
 }
 
 .hero__edge-esq::before {
-  background: #1f5bff;
+  background: #127b91;
   clip-path: polygon(calc(var(--pw) * 0.1 + 28px) 0, calc(var(--pw) * 0.1 + 38px) 0, 38px 100%, 28px 100%);
 }
 
@@ -126,7 +126,7 @@
   }
 }
 
-/* Cunha azul subindo no canto inferior direito, atrás da dupla, com um filete paralelo */
+/* Cunha turquesa subindo no canto inferior direito, com um filete paralelo */
 .hero__band {
   position: absolute;
   /* atrás do painel: a ponta da cunha não passa por cima do claro */
@@ -146,7 +146,7 @@
 }
 
 .hero__band::before {
-  background: #1f5bff;
+  background: #127b91;
   clip-path: polygon(0 100%, 100% 34%, 100% 100%);
 }
 
@@ -180,7 +180,7 @@
 
 /* faixa azul de 10px e filete branco 12px acima, descendo suavemente até a borda */
 .hero__band-esq::before {
-  background: #1f5bff;
+  background: #127b91;
   clip-path: polygon(0 12px, 100% 26px, 100% 36px, 0 22px);
 }
 
@@ -198,7 +198,7 @@
 
 /*
   Detalhes sobre a fachada escura. Ficam no mesmo nível da cunha azul (atrás do
-  painel claro e da dupla), então só aparecem nas áreas onde a foto da academia aparece.
+  painel claro), então só aparecem nas áreas onde a foto da academia aparece.
 */
 .hero__deco {
   position: absolute;
@@ -267,9 +267,9 @@
   }
 }
 
-/* Tablet e celular: a foto aparece só embaixo, atrás da dupla */
+/* Tablet e celular: a foto aparece só embaixo, na faixa da fachada */
 @media (max-width: 980px) {
-  /* no canto escuro logo abaixo da diagonal, à esquerda da dupla */
+  /* no canto escuro logo abaixo da diagonal, à esquerda */
   .hero__deco--x {
     top: auto;
     right: auto;
@@ -290,41 +290,9 @@
   }
 }
 
-/* A dupla começa logo depois do texto e cruza a borda do painel */
+/* Faixa da fachada embaixo do texto: só existe no celular e no tablet (ver mais abaixo) */
 .hero__visual {
-  position: absolute;
-  z-index: -1;
-  top: 0;
-  bottom: 0;
-  left: calc(var(--cx) + 520px);
-  right: 0;
-}
-
-/* brilho azul suave atrás da dupla */
-.hero__visual::before {
-  content: '';
-  position: absolute;
-  left: 6%;
-  bottom: 4%;
-  width: min(760px, 90%);
-  height: 78%;
-  background: radial-gradient(closest-side, rgb(31 91 255 / 0.42), rgb(31 91 255 / 0.12) 55%, transparent);
-  filter: blur(10px);
-  animation: fadeIn 1.4s ease 0.5s backwards;
-  pointer-events: none;
-}
-
-.hero__duo {
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  width: auto;
-  height: 90%;
-  max-width: none;
-  object-fit: contain;
-  object-position: left bottom;
-  filter: drop-shadow(0 24px 32px rgb(0 0 0 / 0.45));
-  animation: duoIn 1s cubic-bezier(0.22, 1, 0.36, 1) 0.3s backwards;
+  display: none;
 }
 
 @keyframes panelIn {
@@ -338,13 +306,6 @@
   from {
     opacity: 0;
     transform: translateX(80px);
-  }
-}
-
-@keyframes duoIn {
-  from {
-    opacity: 0;
-    transform: translateY(40px);
   }
 }
 
@@ -390,8 +351,9 @@
   }
 }
 
+/* centralizada na faixa de 76px, alinhada com a cápsula do menu */
 .hero .hero__logo img {
-  height: 68px;
+  height: 58px;
 }
 
 .hero__content {
@@ -430,7 +392,7 @@
 /* "TREINE" / "CERTO" empilhados */
 .hero__title span {
   display: block;
-  color: #1f5bff;
+  color: #127b91;
 }
 
 /* frase de apoio em preto, com um traço azul na frente: o azul fica só no CERTO */
@@ -453,7 +415,7 @@
   margin-top: 0.6em;
   width: 28px;
   height: 3px;
-  background: #1f5bff;
+  background: #127b91;
 }
 
 .hero__lead {
@@ -515,10 +477,10 @@
 
 .hero__btn--azul {
   padding-right: 10px;
-  background: #1f5bff;
+  background: #127b91;
   /* sombra azul embaixo + filete escuro na base, dá volume */
   box-shadow:
-    0 16px 30px -16px rgb(31 91 255 / 0.9),
+    0 16px 30px -16px rgb(18 123 145 / 0.9),
     inset 0 -3px 0 rgb(0 0 0 / 0.16);
 }
 
@@ -549,7 +511,7 @@
 }
 
 .hero__btn:focus-visible {
-  outline: 3px solid #1f5bff;
+  outline: 3px solid #127b91;
   outline-offset: 3px;
 }
 
@@ -563,15 +525,15 @@
   }
 
   .hero__btn--azul:hover {
-    background: #1a52f0;
+    background: #0f7186;
     box-shadow:
-      0 22px 36px -16px rgb(31 91 255 / 1),
+      0 22px 36px -16px rgb(18 123 145 / 1),
       inset 0 -3px 0 rgb(0 0 0 / 0.16);
   }
 
   .hero__btn--azul:hover .hero__btn-seta {
     background: #ffffff;
-    color: #1f5bff;
+    color: #127b91;
     transform: translateX(3px);
   }
 
@@ -614,7 +576,7 @@
   top: 46%;
   width: 10px;
   height: 90px;
-  background: #1f5bff;
+  background: #127b91;
 }
 
 /* X pequeno sólido perto do título */
@@ -624,7 +586,7 @@
   top: 27%;
   width: 22px;
   height: 22px;
-  background: #1f5bff;
+  background: #127b91;
 }
 
 /* Entrada: o texto e as informações sobem em sequência */
@@ -639,7 +601,7 @@
   }
 }
 
-/* Entre 981 e 1180px o texto fica mais estreito para caber ao lado da dupla */
+/* Entre 981 e 1180px o texto fica mais estreito para caber ao lado da fachada */
 @media (max-width: 1180px) and (min-width: 981px) {
   .hero__content {
     max-width: 440px;
@@ -663,7 +625,7 @@
   }
 }
 
-/* Tablet e celular: texto no painel branco e a dupla abaixo, sobre a foto escura */
+/* Tablet e celular: texto no painel branco e a faixa da fachada abaixo */
 @media (max-width: 980px) {
   /* painel na largura toda: a logo fica centralizada numa linha própria, abaixo dos botões do header */
   .hero__brand {
@@ -685,7 +647,7 @@
   }
 
   .hero .hero__logo img {
-    height: 56px;
+    height: 50px;
   }
 
   .hero__shape {
@@ -693,7 +655,7 @@
   }
 
   /*
-    Foto só na área da dupla (o painel claro cobre o resto), enquadrada no letreiro
+    Foto só na faixa de baixo (o painel claro cobre o resto), enquadrada no letreiro
     "Studio HomeFit" da fachada em vez das portas de vidro
   */
   .hero__bg {
@@ -704,7 +666,7 @@
 }
 
 @media (max-width: 640px) {
-  /* no celular a dupla ocupa quase toda a largura: a foto desce para o letreiro sair abaixo da diagonal */
+  /* no celular a foto desce para o letreiro sair abaixo da diagonal */
   .hero__bg {
     bottom: -90px;
     height: calc(var(--visual-h) + 90px);
@@ -714,7 +676,7 @@
 
 @media (max-width: 980px) {
 
-  /* painel na largura toda, terminando numa diagonal reta acima da dupla */
+  /* painel na largura toda, terminando numa diagonal reta acima da faixa da fachada */
   .hero__panel {
     left: 0;
     width: 100%;
@@ -747,6 +709,7 @@
   }
 
   .hero__visual {
+    display: block;
     position: relative;
     order: 2;
     left: auto;
@@ -756,20 +719,13 @@
     height: var(--visual-h);
     margin: -70px auto 0;
   }
-
-  .hero__duo {
-    left: 50%;
-    width: 100%;
-    height: 96%;
-    translate: -50% 0;
-    object-position: center bottom;
-  }
 }
 
 @media (max-width: 640px) {
-  /* no celular a logo ganha uma linha própria, centralizada, logo abaixo dos botões do topo */
+  /* no celular a logo ganha uma linha própria, centralizada, logo abaixo dos botões do topo
+     (a da Karol é larga e chega embaixo dos botões: 64px deixa uma folga entre os dois) */
   .hero__brand {
-    top: 52px;
+    top: 64px;
     height: auto;
   }
 

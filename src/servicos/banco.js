@@ -468,25 +468,6 @@ const supabaseBackend = {
     async setRole(userId, role) {
       await must((await client()).from('profiles').update({ role }).eq('id', userId))
     },
-    async listCoupons() {
-      return must((await client()).from('coupons').select('*').order('created_at', { ascending: false }))
-    },
-    async saveCoupon(c) {
-      const row = {
-        code: c.code,
-        kind: c.kind,
-        value: c.value,
-        active: c.active,
-        starts_at: c.startsAt || null,
-        expires_at: c.expiresAt || null,
-        max_uses: c.maxUses || null,
-      }
-      if (c.id) return must((await client()).from('coupons').update(row).eq('id', c.id).select('*').single())
-      return must((await client()).from('coupons').insert(row).select('*').single())
-    },
-    async deleteCoupon(id) {
-      await must((await client()).from('coupons').delete().eq('id', id))
-    },
     async getSettings() {
       return toSettings(await must((await client()).from('settings').select('*').eq('id', 1).single()))
     },

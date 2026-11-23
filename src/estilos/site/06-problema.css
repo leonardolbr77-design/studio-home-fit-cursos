@@ -54,13 +54,13 @@
 }
 
 .problem__compare .is-good {
-  background: #edf1ff;
-  border: 1px solid #d9e2ff;
+  background: #e5f3f6;
+  border: 1px solid #cde8ee;
   color: #0a0a0b;
 }
 
 .problem__compare .is-good svg {
-  background: #1f5bff;
+  background: #127b91;
   color: #ffffff;
 }
 
@@ -95,7 +95,7 @@
   left: -1px;
   width: 4px;
   border-radius: 0 4px 4px 0;
-  background: #1f5bff;
+  background: #127b91;
   transform: scaleY(0);
   transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
 }
@@ -150,7 +150,7 @@
   width: 46px;
   height: 40px;
   margin-left: 2px;
-  background: #1f5bff;
+  background: #127b91;
   color: #ffffff;
   transform: skewX(-12deg);
   box-shadow: 3px 3px 0 #0a0a0b;
@@ -184,7 +184,7 @@
   padding: 24px 64px 24px 24px;
   overflow: hidden;
   border-radius: 16px;
-  background: #1f5bff;
+  background: #127b91;
   color: #ffffff;
 }
 
@@ -226,7 +226,7 @@
   padding: 8px 14px;
   border-radius: 999px;
   background: #ffffff;
-  color: #1f5bff;
+  color: #127b91;
   font-size: 0.85rem;
   font-weight: 800;
   transition:
@@ -242,8 +242,8 @@
   /* card anda para a direita, a barra azul cresce e o selo inverte para preto */
   .pain:hover {
     transform: translateX(6px);
-    border-color: #d9e2ff;
-    box-shadow: 0 18px 34px -24px rgb(31 91 255 / 0.55);
+    border-color: #cde8ee;
+    box-shadow: 0 18px 34px -24px rgb(18 123 145 / 0.55);
   }
 
   .pain:hover::before {
@@ -252,7 +252,7 @@
 
   .pain:hover .pain__icon {
     background: #0a0a0b;
-    box-shadow: 3px 3px 0 #1f5bff;
+    box-shadow: 3px 3px 0 #127b91;
     transform: skewX(-12deg) translateY(-2px);
   }
 
